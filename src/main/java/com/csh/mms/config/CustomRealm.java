@@ -11,9 +11,9 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
-import com.csh.mms.domain.PermissionDomain;
+import com.csh.mms.domain.SysPermission;
 import com.csh.mms.domain.RoleDomain;
-import com.csh.mms.domain.UserDomain;
+import com.csh.mms.domain.SysUser;
 import com.csh.mms.service.LoginService;
 import com.csh.mms.service.UserService;
 
@@ -29,8 +29,6 @@ public class CustomRealm extends AuthorizingRealm {
 
 	@Autowired
     private LoginService loginService;
-	@Autowired
-	private UserService userService;
 
     /**
      * @MethodName doGetAuthorizationInfo
@@ -43,15 +41,15 @@ public class CustomRealm extends AuthorizingRealm {
         //获取登录用户名
         String account = (String) principalCollection.getPrimaryPrincipal();
         //查询用户名称
-        UserDomain user = userService.getUserByAccount(account);
+        SysUser user = loginService.getUserByAccount(account);
         //添加角色和权限
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         for (RoleDomain role : user.getRoles()) {
             //添加角色
             simpleAuthorizationInfo.addRole(role.getRoleName());
             //添加权限
-            for (PermissionDomain permissions : role.getPermission()) {
-                simpleAuthorizationInfo.addStringPermission(permissions.getPermissionsName());
+            for (SysPermission permission : role.getPermission()) {
+                simpleAuthorizationInfo.addStringPermission(permission.getPermissionName());
             }
         }
         return simpleAuthorizationInfo;
@@ -70,7 +68,7 @@ public class CustomRealm extends AuthorizingRealm {
         }
         //获取用户信息
         String account = authenticationToken.getPrincipal().toString();
-        UserDomain user = userService.getUserByAccount(account);
+        SysUser user = loginService.getUserByAccount(account);
         if (user == null) {
             //这里返回后会报出对应异常
             return null;
