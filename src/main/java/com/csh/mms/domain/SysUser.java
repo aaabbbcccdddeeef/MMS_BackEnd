@@ -28,7 +28,7 @@ public class SysUser {
 	/**
      * 用户对应的角色集合
      */
-    private Set<RoleDomain> roles;
+    private Set<SysRole> roles;
 	public String getId() {
 		return id;
 	}
@@ -77,10 +77,10 @@ public class SysUser {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public Set<RoleDomain> getRoles() {
+	public Set<SysRole> getRoles() {
 		return roles;
 	}
-	public void setRoles(Set<RoleDomain> roles) {
+	public void setRoles(Set<SysRole> roles) {
 		this.roles = roles;
 	}
 	public String getName() {

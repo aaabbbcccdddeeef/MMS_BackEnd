@@ -10,7 +10,7 @@ import java.util.Set;
  * @date  2020年10月31日 下午10:31:10 
  *
  */
-public class RoleDomain {
+public class SysRole {
 	
 	private String id;
 	private String roleName;
