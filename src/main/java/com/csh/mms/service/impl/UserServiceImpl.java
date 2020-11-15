@@ -41,9 +41,16 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public String deleteUser(String id) {
-		String user = userDao.deleteUser(id);
-		return user;
+	public SysUser deleteUser(String id) {
+		SysUser user = userDao.getUserById(id);
+		if(user != null) {
+			user = userDao.deleteUser(id);
+			return user;
+		}else {
+
+			return null;
+		}
+		
 	}
 
 	@Override

@@ -14,7 +14,7 @@ public interface UserService {
 
 	SysUser updatetUser (SysUser userDomain);
 	
-	String deleteUser (String id);
+	SysUser deleteUser (String id);
 
 	List<SysUser> getUserList(SysUser user);
 }

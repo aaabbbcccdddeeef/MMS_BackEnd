@@ -21,7 +21,7 @@ public interface UserDao {
 
 	SysUser updatetUser(SysUser userDomain);
 
-	String deleteUser(@Param("id") String id);
+	SysUser deleteUser(@Param("id") String id);
 
 	SysUser getUserByAccount(@Param(value = "account") String account);
 

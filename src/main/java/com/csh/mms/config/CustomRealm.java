@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import com.csh.mms.domain.SysPermission;
-import com.csh.mms.domain.RoleDomain;
+import com.csh.mms.domain.SysRole;
 import com.csh.mms.domain.SysUser;
 import com.csh.mms.service.LoginService;
 import com.csh.mms.service.UserService;
@@ -44,7 +44,7 @@ public class CustomRealm extends AuthorizingRealm {
         SysUser user = loginService.getUserByAccount(account);
         //添加角色和权限
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        for (RoleDomain role : user.getRoles()) {
+        for (SysRole role : user.getRoles()) {
             //添加角色
             simpleAuthorizationInfo.addRole(role.getRoleName());
             //添加权限
