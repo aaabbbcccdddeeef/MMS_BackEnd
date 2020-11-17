@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csh.mms.dao.UserDao">
+    <!-- 根据id查询产品信息-->
+    <select id="getProd" resultType="com.csh.mms.domain.ProductionInfo" parameterType="java.lang.String" >
+        select * from production_info pi where pi.id = #{id} and pi.enable_delete ='1'
+	</select>
+	<!-- 新增产品信息 -->
+	<insert id="insertProd" parameterType="java.lang.String" useGeneratedKeys="true" keyProperty="id">
+		insert into production_info
+			(id, production_name, production_type, production_type_id, frequency, size, pitch, color1, color2, pack,
+				 creator, create_time, modifier, update_time, enable_delete, remark)
+			vaules (#{id}, #{productionName}, #{productionType}, #{productionTypeId}, #{frequency}, #{size}, #{pitch},
+				 #{color1}, #{color2}, #{pack}, #{creator}, #{create_time}, #{modifier}, #{update_time}, #{enableDelete}, #{remark})
+	</insert>
+	<!-- 修改产品信息 -->
+	<update id="updateProd"  parameterType="java.lang.String" >
+		update production_info
+			<trim prefix="set" suffixOverrides=",">
+				<if test="productionName !=null">production_name=#{productionName},</if>
+				<if test="productionType !=null">production_type=#{productionType},</if>
+				<if test="productionTypeId !=null">production_type_id=#{productionTypeId},</if>
+				<if test="frequency !=null">frequency=#{frequency},</if>
+				<if test="size !=null">size=#{size},</if>
+				<if test="pitch !=null">pitch=#{pitch},</if>
+				<if test="color1 !=null">color1=#{color1},</if>
+				<if test="color2 !=null">color2=#{color2},</if>
+				<if test="pack !=null">pack=#{pack},</if>
+				<if test="creator !=null">creator=#{creator},</if>
+				<if test="createTime !=null">create_time=#{createTime},</if>
+				<if test="modifier !=null">modifier=#{modifier},</if>
+				<if test="update_time !=null">update_time=#{update_time},</if>
+				<if test="enableDelete !=null">enable_delete=#{enableDelete},</if>
+				<if test="remark !=null">remark=#{remark},</if>
+			</trim>
+	</update>
+	<!-- 删除产品信息（逻辑删除，改变产品有效状态） -->
+	<delete id="deleteProd"  parameterType="java.lang.String" >
+		update production_info pi set pi.enable_delete = '2'
+	</delete>
+	
+</mapper>

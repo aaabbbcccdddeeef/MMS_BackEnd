@@ -11,7 +11,7 @@ import java.util.Set;
  * @date  2020年10月15日 下午10:32:18 
  *
  */
-public class UserDomain {
+public class SysUser {
 	
 	private String id;
 	private String account;
@@ -23,11 +23,12 @@ public class UserDomain {
 	private String sex;
 	private String mail;
 	private String slogan;
+	private String enableDelete;
 	private String remark;
 	/**
      * 用户对应的角色集合
      */
-    private Set<RoleDomain> roles;
+    private Set<SysRole> roles;
 	public String getId() {
 		return id;
 	}
@@ -76,10 +77,10 @@ public class UserDomain {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public Set<RoleDomain> getRoles() {
+	public Set<SysRole> getRoles() {
 		return roles;
 	}
-	public void setRoles(Set<RoleDomain> roles) {
+	public void setRoles(Set<SysRole> roles) {
 		this.roles = roles;
 	}
 	public String getName() {
@@ -99,6 +100,12 @@ public class UserDomain {
 	}
 	public void setSex(String sex) {
 		this.sex = sex;
+	}
+	public String getEnableDelete() {
+		return enableDelete;
+	}
+	public void setEnableDelete(String enableDelete) {
+		this.enableDelete = enableDelete;
 	}
 	
 }

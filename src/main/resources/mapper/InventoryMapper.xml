@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csh.mms.dao.UserDao">
+    <!-- 根据id查询产品信息-->
+    <select id="getInventory" resultType="com.csh.mms.domain.InventoryInfo" parameterType="java.lang.String" >
+        select * from inventroy_info ii where ii.id = #{id} and pi.enable_delete ='1'
+	</select>
+	<!-- 新增库存信息 -->
+	<insert id="insertInventory" parameterType="java.lang.String" useGeneratedKeys="true" keyProperty="id">
+		insert into inventroy_info
+			(id, production_id, arrival_batch, per, suite, creator, create_time, modifier, update_time, inventory_warning, remark)
+			vaules (#{id}, #{productionId}, #{arrivalBatch}, #{per}, #{suite}, #{creator}, #{createTime}, #{modifier}, #{updateTime}, #{inventoryWarning}, #{remark})
+	</insert>
+	<!-- 修改库存信息 -->
+	<update id="updateInventory"  parameterType="java.lang.String" >
+		update inventroy_info
+			<trim prefix="set" suffixOverrides=",">
+				<if test="productionId !=null">production_id=#{productionId},</if>
+				<if test="arrivalBatch !=null">arrival_batch=#{arrivalBatch},</if>
+				<if test="per !=null">per=#{per},</if>
+				<if test="suite !=null">suite=#{suite},</if>
+				<if test="creator !=null">creator=#{creator},</if>
+				<if test="pitch !=null">create_time=#{pitch},</if>
+				<if test="modifier !=null">modifier=#{modifier},</if>
+				<if test="updateTime !=null">update_time=#{updateTime},</if>
+				<if test="inventoryWarning !=null">inventory_warning=#{inventoryWarning},</if>
+				<if test="remark !=null">remark=#{remark},</if>
+			</trim>
+	</update>
+	<!-- 删除库存信息（逻辑删除，改变库存有效状态） -->
+	<delete id="deleteInventory"  parameterType="java.lang.String" >
+		update inventroy_info ii set ii.enable_delete = '2'
+	</delete>
+	
+</mapper>

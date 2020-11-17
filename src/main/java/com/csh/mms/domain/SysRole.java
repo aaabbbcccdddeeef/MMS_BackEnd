@@ -2,17 +2,27 @@ package com.csh.mms.domain;
 
 import java.util.Set;
 
-public class RoleDomain {
+/**
+ * 
+ * @ClassName  RoleDomain 
+ * @Description TODO
+ * @author csh
+ * @date  2020年10月31日 下午10:31:10 
+ *
+ */
+public class SysRole {
 	
 	private String id;
 	private String roleName;
 	private String roleCode;
 	private String roleDescription;
+	private String userId;
+	private String permissionId;
 	private String remark;
 	/**
      * 角色对应权限集合
      */
-    private Set<PermissionDomain> permission;
+    private Set<SysPermission> permission;
 	public String getId() {
 		return id;
 	}
@@ -43,11 +53,23 @@ public class RoleDomain {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public Set<PermissionDomain> getPermission() {
+	public Set<SysPermission> getPermission() {
 		return permission;
 	}
-	public void setPermission(Set<PermissionDomain> permission) {
+	public void setPermission(Set<SysPermission> permission) {
 		this.permission = permission;
+	}
+	public String getPermissionId() {
+		return permissionId;
+	}
+	public void setPermissionId(String permissionId) {
+		this.permissionId = permissionId;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	
 

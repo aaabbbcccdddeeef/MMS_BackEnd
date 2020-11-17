@@ -1,5 +1,8 @@
-package com.csh.mms.controller.login;
+package com.csh.mms.controller;
 
+
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -11,20 +14,30 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.csh.mms.domain.UserDomain;
+import com.csh.mms.domain.SysUser;
 
-import lombok.extern.slf4j.Slf4j;
-
+/**
+ * 
+ * @ClassName  LoginController 
+ * @Description 登录
+ * @author csh
+ * @date  2020年11月4日 下午9:44:38 
+ *
+ */
 @RestController
-@Slf4j
 public class LoginController {
 
-    @GetMapping("/login")
-    public String login(UserDomain user) {
-        if (StringUtils.isEmpty(user.getAccount()) || StringUtils.isEmpty(user.getPassword())) {
-            return "请输入用户名和密码！";
+    @PostMapping("/login")
+   	public Map<String, Object> login(@RequestBody SysUser user) {
+    	Map<String, Object> resultMap = new HashMap<String, Object>();
+    	if (StringUtils.isEmpty(user.getAccount()) || StringUtils.isEmpty(user.getPassword())) {
+    		resultMap.put("code", 0);
+    		resultMap.put("msg", "请输入用户名和密码！");
+            return resultMap;
         }
         //用户认证信息
         Subject subject = SecurityUtils.getSubject();
@@ -32,19 +45,22 @@ public class LoginController {
         try {
             //进行验证，这里可以捕获异常，然后返回对应信息
             subject.login(usernamePasswordToken);
-//	        subject.checkRole("admin");
-//	        subject.checkPermissions("query", "add");
         } catch (UnknownAccountException e) {
-//            log.error("用户名不存在！", e);
-            return "用户名不存在！";
+        	resultMap.put("code", 1);
+    		resultMap.put("msg", "用户名不存在！");
+    		return resultMap;
         } catch (AuthenticationException e) {
-//            log.error("账号或密码错误！", e);
-            return "账号或密码错误！";
+        	resultMap.put("code", 2);
+    		resultMap.put("msg", "账号或密码错误！");
+        	return resultMap;
         } catch (AuthorizationException e) {
-//            log.error("没有权限！", e);
-            return "没有权限";
+        	resultMap.put("code", 3);
+    		resultMap.put("msg", "没有权限！");
+        	return resultMap;
         }
-        return "login success";
+        resultMap.put("code", 200);
+		resultMap.put("msg", "登录成功！");
+        return resultMap;
     }
 
     @RequiresRoles("admin")
