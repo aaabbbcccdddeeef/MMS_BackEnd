@@ -1,19 +1,30 @@
 package com.csh.mms.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.csh.mms.domain.SaleRecord;
-import com.csh.mms.service.SaleRecordService;
+import com.csh.mms.dto.SaleInventoryProdDto;
+import com.csh.mms.service.SaleService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 
 import net.sf.json.JSONObject;
 
 @RestController
+@RequestMapping("/sale")
 public class SaleRecordController {
 	
-	private SaleRecordService saleService;
+	@Autowired
+	private SaleService saleService;
 	
 	@PostMapping("/getSaleRecord")
 	public JSONObject getSaleRecord(@Param(value = "id") String id) {
@@ -86,8 +97,25 @@ public class SaleRecordController {
 				json.put("msg", "数据异常，删除失败！");
 				return json;
 			}
-			
 		}
- 
 	}
+	
+	@PostMapping("/getSaleList")
+	public Map<String, Object> getSaleList(@RequestBody SaleInventoryProdDto dto) {
+		Map<String, Object> map = new HashMap<>();
+		PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+		Page<SaleInventoryProdDto> resultList = saleService.getSaleList(dto);
+		if(resultList != null) {
+			map.put("code", 200);
+			map.put("resultList", resultList);
+			map.put("totalpage", resultList.getPages());
+			map.put("totalCount", resultList.getTotal());
+			return map;
+		}else {
+			map.put("code", 0);
+			map.put("msg", "查询失败！");
+			return map;
+		}
+	}
+	 
 }

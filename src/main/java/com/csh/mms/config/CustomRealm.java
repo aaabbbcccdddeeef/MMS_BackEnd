@@ -15,7 +15,6 @@ import com.csh.mms.domain.SysPermission;
 import com.csh.mms.domain.SysRole;
 import com.csh.mms.domain.SysUser;
 import com.csh.mms.service.LoginService;
-import com.csh.mms.service.UserService;
 
 /**
  * 

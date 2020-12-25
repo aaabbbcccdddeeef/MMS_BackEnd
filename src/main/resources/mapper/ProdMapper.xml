@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.csh.mms.dao.UserDao">
+<mapper namespace="com.csh.mms.dao.ProductionDao">
     <!-- 根据id查询产品信息-->
-    <select id="getProd" resultType="com.csh.mms.domain.ProductionInfo" parameterType="java.lang.String" >
-        select * from production_info pi where pi.id = #{id} and pi.enable_delete ='1'
+    <select id="getProdInfo" resultType="com.csh.mms.domain.ProductionInfo" parameterType="java.lang.String" >
+        select * from production_info pi where pi.id = #{id}
 	</select>
 	<!-- 新增产品信息 -->
 	<insert id="insertProd" parameterType="java.lang.String" useGeneratedKeys="true" keyProperty="id">
@@ -38,5 +38,17 @@
 	<delete id="deleteProd"  parameterType="java.lang.String" >
 		update production_info pi set pi.enable_delete = '2'
 	</delete>
-	
+	<select id="getProdList" resultType="com.csh.mms.dto.InventoryProdDto" parameterType="java.lang.String" >
+        select * from production_info pi where 1=1 and pi.enable_delete = '1'
+			<if test="productionName !=null and productionName != ''">and pi.production_name like concat ('%',#{productionName},'%')</if>
+			<if test="productionType !=null and productionType != ''">and pi.production_type=#{productionType}</if>
+			<if test="frequency !=null and frequency != ''">and pi.frequency ike concat ('%',#{frequency},'%')</if>
+			<if test="size !=null and size != ''">and pi.size ike concat ('%',#{size},'%')</if>
+			<if test="pitch !=null and pitch != ''">and pi.pitch ike concat ('%',#{pitch},'%')</if>
+			<if test="color1 !=null and color1 != ''">and (pi.color1 ike concat ('%',#{color1},'%') or color1 ike concat ('%',#{color2},'%'))</if>
+			<if test="pack !=null and pack != ''">and pi.pack=#{pack}</if>
+			<if test="creator !=null and creator != ''">and pi.creator ike concat ('%',#{creator},'%')</if>
+			<if test="createTime !=null and createTime != ''">and pi.create_time=#{createTime}</if>
+        	order by pi.create_time desc
+	</select>
 </mapper>

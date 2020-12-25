@@ -2,6 +2,7 @@ package com.csh.mms.domain;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * 
@@ -21,10 +22,13 @@ public class SaleRecord {
 	private BigDecimal total;
 	private String faultType;
 	private String faultDescription;
+	private String creatorId;
 	private String creator;
-	private Date createTime;
+	private Timestamp createTime;
+	private String modifierId;
 	private String modifier;
-	private Date updateTime;
+	private Timestamp updateTime;
+	private String enableDelete;
 	public String getId() {
 		return id;
 	}
@@ -79,22 +83,70 @@ public class SaleRecord {
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
 	public String getModifier() {
 		return modifier;
 	}
 	public void setModifier(String modifier) {
 		this.modifier = modifier;
 	}
-	public Date getUpdateTime() {
+	/**
+	 * @return the creatorId
+	 */
+	public String getCreatorId() {
+		return creatorId;
+	}
+	/**
+	 * @param creatorId the creatorId to set
+	 */
+	public void setCreatorId(String creatorId) {
+		this.creatorId = creatorId;
+	}
+	/**
+	 * @return the modifierId
+	 */
+	public String getModifierId() {
+		return modifierId;
+	}
+	/**
+	 * @param modifierId the modifierId to set
+	 */
+	public void setModifierId(String modifierId) {
+		this.modifierId = modifierId;
+	}
+	/**
+	 * @return the createTime
+	 */
+	public Timestamp getCreateTime() {
+		return createTime;
+	}
+	/**
+	 * @param createTime the createTime to set
+	 */
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
+	}
+	/**
+	 * @return the updateTime
+	 */
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
-	public void setUpdateTime(Date updateTime) {
+	/**
+	 * @param updateTime the updateTime to set
+	 */
+	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+	/**
+	 * @return the enableDelete
+	 */
+	public String getEnableDelete() {
+		return enableDelete;
+	}
+	/**
+	 * @param enableDelete the enableDelete to set
+	 */
+	public void setEnableDelete(String enableDelete) {
+		this.enableDelete = enableDelete;
 	}
 }

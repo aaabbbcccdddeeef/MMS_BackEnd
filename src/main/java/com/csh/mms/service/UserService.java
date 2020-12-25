@@ -1,20 +1,19 @@
 package com.csh.mms.service;
 
-import java.util.List;
-
 import com.csh.mms.domain.SysUser;
+import com.csh.mms.dto.UserRolePermissionDto;
+import com.github.pagehelper.Page;
 
 public interface UserService {
 	
 	SysUser getUserByAccount(String account);
-
-	SysUser getUserById(String id);
 	
-	SysUser insertUser (SysUser userDomain);
+	void insertUser (UserRolePermissionDto dto);
 
-	SysUser updatetUser (SysUser userDomain);
+	void updatetUser (UserRolePermissionDto dto);
 	
-	SysUser deleteUser (String id);
+	void deleteUser (String id);
 
-	List<SysUser> getUserList(SysUser user);
+
+	Page<UserRolePermissionDto> getUserList(UserRolePermissionDto dto);
 }

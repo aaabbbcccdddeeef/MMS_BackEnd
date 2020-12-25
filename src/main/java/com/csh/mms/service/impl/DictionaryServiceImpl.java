@@ -6,20 +6,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.csh.mms.dao.DictionaryDao;
 import com.csh.mms.domain.SysDictionary;
+import com.csh.mms.dto.DictionaryDto;
 import com.csh.mms.service.DictionaryService;
+import com.github.pagehelper.Page;
 
 @Service
 public class DictionaryServiceImpl implements DictionaryService{
 	
 	@Autowired
 	private DictionaryDao dictionaryDao;
-
-	@Override
-	@Transactional
-	public SysDictionary getDictionary(String id) {
-		SysDictionary dictionary = dictionaryDao.getDictionary(id);
-		return dictionary;
-	}
 
 	@Override
 	@Transactional
@@ -40,6 +35,11 @@ public class DictionaryServiceImpl implements DictionaryService{
 	public SysDictionary deleteDictionary(String id) {
 		SysDictionary sysDictionary = dictionaryDao.deleteDictionary(id);
 		return sysDictionary;
+	}
+
+	@Override
+	public Page<DictionaryDto> getDictList(DictionaryDto dto) {
+		return dictionaryDao.getDictList(dto);
 	}
 
 

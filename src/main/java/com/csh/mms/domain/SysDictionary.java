@@ -15,6 +15,7 @@ public class SysDictionary {
 	private String id;
 	private String name;
 	private String code;
+	private String codeName;
 	private String number;
 	private String enableUse;
 	private String enableDelete;
@@ -89,6 +90,12 @@ public class SysDictionary {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getCodeName() {
+		return codeName;
+	}
+	public void setCodeName(String codeName) {
+		this.codeName = codeName;
 	}
 
 }

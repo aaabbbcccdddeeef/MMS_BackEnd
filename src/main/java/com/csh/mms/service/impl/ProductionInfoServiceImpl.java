@@ -6,7 +6,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.csh.mms.dao.ProductionDao;
 import com.csh.mms.domain.ProductionInfo;
+import com.csh.mms.dto.InventoryProdDto;
 import com.csh.mms.service.ProductionInfoService;
+import com.github.pagehelper.Page;
 
 @Service
 public class ProductionInfoServiceImpl implements ProductionInfoService{
@@ -37,6 +39,12 @@ public class ProductionInfoServiceImpl implements ProductionInfoService{
 	public ProductionInfo updateProd(ProductionInfo pordInfo) {
 		ProductionInfo pordInfoResult = prodDao.updateProd(pordInfo);
 		return pordInfoResult;
+	}
+
+	@Override
+	public Page<InventoryProdDto> getProdList(InventoryProdDto prod) {
+		Page<InventoryProdDto> list = prodDao.getProdList(prod);
+		return list;
 	}
 
 	
