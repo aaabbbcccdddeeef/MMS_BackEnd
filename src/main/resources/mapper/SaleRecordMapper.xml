@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csh.mms.dao.SaleRecordDao">
+    <!-- 根据id查询销售记录详情-->
+    <select id="getSaleRecord" resultType="com.csh.mms.domain.SaleRecord" parameterType="java.lang.String" >
+        select * from sale_record pi where pi.id = #{id}
+	</select>
+	
+	<!-- 新增销售记录 -->
+	<insert id="insertSaleRecord" parameterType="java.lang.String" useGeneratedKeys="true" keyProperty="id">
+		insert into sale_record
+			(id, production_id, order_id, amount, price, total, fault_type, fault_description, creator, create_time,
+				  modifier, update_time, remark)
+			vaules (#{id}, #{productionId}, #{orderId}, #{amount}, #{price}, #{total}, #{faultType},
+				 #{faultDescription}, #{creator}, #{createTime}, #{modifier}, #{update_time}, #{remark})
+	</insert>
+	<!-- 修改销售记录 -->
+	<update id="updateSaleRecord"  parameterType="java.lang.String" >
+		update sale_record
+			<trim prefix="set" suffixOverrides=",">
+				<if test="productionId !=null">production_id=#{productionId},</if>
+				<if test="orderId !=null">order_id=#{orderId},</if>
+				<if test="amount !=null">amount=#{amount},</if>
+				<if test="price !=null">price=#{price},</if>
+				<if test="total !=null">total=#{total},</if>
+				<if test="faultType !=null">fault_type=#{faultType},</if>
+				<if test="faultDescription !=null">fault_description=#{faultDescription},</if>
+				<if test="creator !=null">creator=#{creator},</if>
+				<if test="createTime !=null">create_time=#{createTime},</if>
+				<if test="creator !=null">creator=#{creator},</if>
+				<if test="createTime !=null">create_time=#{createTime},</if>
+				<if test="modifier !=null">modifier=#{modifier},</if>
+				<if test="update_time !=null">update_time=#{update_time},</if>
+				<if test="remark !=null">remark=#{remark},</if>
+			</trim>
+	</update>
+	<!-- 删除销售记录（逻辑删除，改变产品有效状态） -->
+	<delete id="deleteSaleRecord"  parameterType="java.lang.String" >
+		update sale_record pi set pi.enable_delete = '2'
+	</delete>
+	
+	<select id="getSaleList" resultType="com.csh.mms.dto.SaleInventoryProdDto" parameterType="java.lang.String" >
+        select * from sale_record sr where 1=1 and  sr.enable_delete = '1'
+        <if test="id != null and id != ''">and sr.id=#{id}</if>
+        <if test="productionId != null and productionId != ''">and sr.production_id=#{productionId}</if>
+        <if test="orderId != null and orderId != ''">and sr.order_id like concat('%',#{orderId},'%')</if>
+        <if test="creator != null and creator != ''">and sr.creator like concat('%',#{creator},'%')</if>
+        <if test="createTime != null and createTime != ''">and sr.create_time=#{createTime}</if>
+        <if test="faultType != null and faultType != ''">and sr.fault_type=#{faultType}</if>
+        order by sr.create_time desc 
+	</select>
+</mapper>

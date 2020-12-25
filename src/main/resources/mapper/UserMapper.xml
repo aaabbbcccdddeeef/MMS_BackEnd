@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csh.mms.dao.UserDao">
+    <!-- 根据id查询用户信息-->
+    <select id="getUserByAccount" resultType="com.csh.mms.domain.SysUser" parameterType="java.lang.String" >
+        select * from sys_user su where su.account = #{account}
+	</select>
+    <!-- 根据账号查询用户信息-->
+    <select id="getUserList" resultType="com.csh.mms.dto.UserRolePermissionDto" parameterType="java.lang.String" >
+        select * from sys_user su where 1=1 and su.enable_delete = '1'
+        <if test="id != null and id != ''">and su.id=#{id}</if>
+        <if test="account != null and account != ''">and su.account like concat('%',#{account},'%')</if>
+        <if test="name != null and name != ''">and su.name like concat('%',#{name},'%')</if>
+        <if test="alias != null and alias != ''">and su.alias like concat('%',#{alias},'%')</if>
+        <if test="sex != null and sex != ''">and su.sex=#{sex}</if>
+        order by su.create_time asc 
+	</select>
+	<!-- 新增用户信息 -->
+	<insert id="insertUser" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_user
+			(id, account, password, name, sex, icon, mobile_phone, alias, mail, slogan, creator_id, creator, create_time, modifier_id, modifier, update_time, enable_delete,remark)
+			values (#{id}, #{account}, #{password}, #{name}, #{sex}, #{icon}, #{mobilePhone}, #{alias}, #{mail}, #{slogan}, #{creatorId}, #{creator}, #{createTime}, #{modifierId}, #{modifier}, #{updateTime}, #{enableDelete}, #{remark})
+	</insert>
+	<!-- 修改用户信息 -->
+	<update id="updateUser"  parameterType="java.lang.String" >
+		update sys_user
+			<trim prefix="set" suffixOverrides=",">
+				<if test="account !=null">account=#{account},</if>
+				<if test="password !=null">password=#{password},</if>
+				<if test="name !=null">name=#{name},</if>
+				<if test="sex !=null">sex=#{sex},</if>
+				<if test="icon !=null">icon=#{icon},</if>
+				<if test="mobilePhone !=null">mobile_phone=#{mobilePhone},</if>
+				<if test="alias !=null">alias=#{alias},</if>
+				<if test="mail !=null">mail=#{mail},</if>
+				<if test="slogan !=null">slogan=#{slogan},</if>
+				<if test="enableDelete !=null">enable_delete=#{enableDelete},</if>
+				<if test="remark !=null">remark=#{remark},</if>
+			</trim>
+			<!-- (id, account, password, name, sex, icon, mobile_phone, alias, mial, slogan, enable_delete,remark)
+			vaules (#{id}, #{account}, #{password}, #{name}, #{sex}, #{icon}, #{mobile_phone}, #{alias}, #{mail}, #{slogan}, #{enable_delete}, #{remark}) -->
+	</update>
+	<!-- 删除用户信息 -->
+	<delete id="deleteUser"  parameterType="map" >
+		update sys_user su set su.enable_delete = '2' where su.id=#{id}
+	</delete>
+	
+</mapper>

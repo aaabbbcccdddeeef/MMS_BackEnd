@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csh.mms.dao.InventoryInfoDao">
+	<!-- <resultMap type="com.csh.mms.domain.InventoryInfo" id="inventoryInfo">
+		<id property="id" column="id"/>
+		<result property="productionId" column="productionl_id" jdbcType="varchar"/>
+		<result property="arrivalBatch" column="arrival_batch" jdbcType="varchar"/>
+		<result property="per" column="per" jdbcType="varchar"/>
+		<result property="suite" column="suite" jdbcType="varchar"/>
+		<result property="creatorId" column="creator_id" jdbcType="varchar"/>
+		<result property="creator" column="creator" jdbcType="varchar"/>
+		<result property="createTime" column="create_time" jdbcType="varchar"/>
+		<result property="modifierId" column="modifier_id" jdbcType="varchar"/>
+		<result property="modifier" column="modifier" jdbcType="varchar"/>
+		<result property="updateTime" column="update_time" jdbcType="varchar"/>
+		<result property="inventoryWarning" column="inventory_warning" jdbcType="varchar"/>
+		<result property="productionId" column="remark" jdbcType="varchar"/>
+	</resultMap> -->
+    <!-- 根据id查询产品详细信息-->
+    <select id="getInventory" resultType="com.csh.mms.domain.InventoryInfo" parameterType="java.lang.String" >
+        select * from inventroy_info ii where ii.id = #{id} and pi.enable_delete ='1'
+	</select>
+	<!-- 新增库存信息 -->
+	<insert id="insertInventory" parameterType="java.lang.String" useGeneratedKeys="true" keyProperty="id">
+		insert into inventroy_info
+			(id, production_id, arrival_batch, per, suite, creator_id, creator, create_time, modifier_id, modifier, update_time, inventory_warning, remark)
+			vaules (#{id}, #{productionId}, #{arrivalBatch}, #{per}, #{suite}, #{creatorId}, #{creator}, #{createTime}, #{modifierId}, #{modifier}, #{updateTime}, #{inventoryWarning}, #{remark})
+	</insert>
+	<!-- 修改库存信息 -->
+	<update id="updateInventory"  parameterType="java.lang.String" >
+		update inventroy_info
+			<trim prefix="set" suffixOverrides=",">
+				<if test="productionId !=null">production_id=#{productionId},</if>
+				<if test="arrivalBatch !=null">arrival_batch=#{arrivalBatch},</if>
+				<if test="per !=null">per=#{per},</if>
+				<if test="suite !=null">suite=#{suite},</if>
+				<if test="creatorId !=null">creator_id=#{creatorId},</if>
+				<if test="creator !=null">creator=#{creator},</if>
+				<if test="pitch !=null">create_time=#{pitch},</if>
+				<if test="modifierId !=null">modifier_id=#{modifierId},</if>
+				<if test="modifier !=null">modifier=#{modifier},</if>
+				<if test="updateTime !=null">update_time=#{updateTime},</if>
+				<if test="inventoryWarning !=null">inventory_warning=#{inventoryWarning},</if>
+				<if test="remark !=null">remark=#{remark},</if>
+			</trim>
+	</update>
+	<!-- 删除库存信息（逻辑删除，改变库存有效状态） -->
+	<delete id="deleteInventory"  parameterType="java.lang.String" >
+		update inventroy_info ii set ii.enable_delete = '2'
+	</delete>
+	
+	<select id="getInventoryList" resultType="com.csh.mms.dto.InventoryProdDto" parameterType="java.lang.String" >
+        select * from inventory_info ii
+        left join production_info pi on ii.production_id = pi.id
+        where 1=1 and ii.enable_delete = '1'
+			<if test="arrivalBatch !=null and arrivalBatch != ''">and ii.arrival_batch like concat ('%',#{arrivalBatch},'%')</if>
+			<if test="per !=null and per != ''">and ii.per=#{per}</if>
+			<if test="suite !=null and suite!= ''">and ii.suite=#{suite}</if>
+			<if test="productionName !=null and productionName != ''">and pi.production_name like concat ('%',#{productionName},'%')</if>
+			<if test="productionType !=null and productionType != ''">and pi.production_type=#{productionType}</if>
+			<if test="pitch !=null and pitch != ''">and pi.pitch ike concat ('%',#{pitch},'%')</if>
+			<if test="frequency !=null and frequency != ''">and pi.frequency ike concat ('%',#{frequency},'%')</if>
+			<if test="color1 !=null and color1 != ''">and (pi.color1 ike concat ('%',#{color1},'%') or color1 ike concat ('%',#{color2},'%'))</if>
+			<if test="creator !=null and creator != ''">and ii.creator  ike concat ('%',#{creator},'%')</if>
+			<if test="createTime !=null and createTime != ''">and ii.create_time=#{createTime}</if>
+			<if test="inventoryWarning !=null and inventoryWarning != ''">and ii.inventory_warning=#{inventoryWarning}</if>
+			<if test="remark !=null and remark !=''">and ii.remark=#{remark}</if>
+        	order by ii.create_time desc
+	</select>
+	<select id="getInventoryPage" resultType="com.csh.mms.dto.InventoryProdDto" parameterType="java.lang.String" >
+        select * from inventory_info ii
+        left join production_info pi on ii.production_id = pi.id
+        where 1=1 and ii.enable_delete = '1'
+			<if test="arrivalBatch !=null and arrivalBatch != ''">and ii.arrival_batch like concat ('%',#{arrivalBatch},'%')</if>
+			<if test="per !=null and per != ''">and ii.per=#{per}</if>
+			<if test="suite !=null and suite!= ''">and ii.suite=#{suite}</if>
+			<if test="productionName !=null and productionName != ''">and pi.production_name like concat ('%',#{productionName},'%')</if>
+			<if test="productionType !=null and productionType != ''">and pi.production_type=#{productionType}</if>
+			<if test="pitch !=null and pitch != ''">and pi.pitch ike concat ('%',#{pitch},'%')</if>
+			<if test="frequency !=null and frequency != ''">and pi.frequency ike concat ('%',#{frequency},'%')</if>
+			<if test="color1 !=null and color1 != ''">and (pi.color1 ike concat ('%',#{color1},'%') or color1 ike concat ('%',#{color2},'%'))</if>
+			<if test="creator !=null and creator != ''">and ii.creator  ike concat ('%',#{creator},'%')</if>
+			<if test="createTime !=null and createTime != ''">and ii.create_time=#{createTime}</if>
+			<if test="inventoryWarning !=null and inventoryWarning != ''">and ii.inventory_warning=#{inventoryWarning}</if>
+			<if test="remark !=null and remark !=''">and ii.remark=#{remark}</if>
+        	order by ii.create_time desc
+	</select>
+</mapper>

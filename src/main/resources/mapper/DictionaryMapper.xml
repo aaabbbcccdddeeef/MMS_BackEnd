@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csh.mms.dao.DictionaryDao">
+    <!-- 根据id查询数据字典-->
+    <select id="getDictList" resultType="com.csh.mms.dto.DictionaryDto" parameterType="java.lang.String" >
+        select * from sys_dic sd where 1 = 1 and sd.enable_delete = '1'
+	        <if test="id != null and id != ''">and sd.id=#{id}</if>
+	        <if test="name != null and name != ''">and sd.name like concat('%',#{name},'%')}</if>
+	        <if test="creator !=null and creator != ''">and sd.creator  ike concat ('%',#{creator},'%')</if>
+	        <if test="enableUse != null and enableUse != ''">and sd.enable_use like concat('%',#{enableUse},'%')</if>
+	        <if test="createTime != null and createTime != ''">and sd.create_time like concat('%',#{createTime},'%')</if>
+        order by sd.number asc, sd.create_time desc
+	</select>
+	
+	<!-- 新增数据字典 -->
+	<insert id="insertDictionary" parameterType="java.lang.String" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_dic
+			(id, name, code, code_name, number, enable_use, enable_delete, creator, create_time, modifier, update_time, remark)
+			vaules (#{id}, #{name}, #{code}, #{codeName}, #{number}, #{enableUse}, #{enableDelete}, #{creator}, #{create_time}, #{modifier}, #{remark})
+	</insert>
+	<!-- 修改数据字典 -->
+	<update id="updateDictionary"  parameterType="java.lang.String" >
+		update sys_dic
+			<trim prefix="set" suffixOverrides=",">
+				<if test="name !=null">name=#{name},</if>
+				<if test="code !=null">code=#{code},</if>
+				<if test="codeName !=null">code=#{code_name},</if>
+				<if test="number !=null">number=#{number},</if>
+				<if test="enable_use !=null">enable_use=#{enable_use},</if>
+				<if test="enable_delete !=null">enable_delete=#{enable_delete},</if>
+				<if test="creator !=null">creator=#{creator},</if>
+				<if test="create_time !=null">create_time=#{create_time},</if>
+				<if test="creator !=null">creator=#{creator},</if>
+				<if test="createTime !=null">create_time=#{createTime},</if>
+				<if test="modifier !=null">modifier=#{modifier},</if>
+				<if test="update_time !=null">update_time=#{update_time},</if>
+				<if test="remark !=null">remark=#{remark},</if>
+			</trim>
+	</update>
+	<!-- 删除数据字典（逻辑删除，改变数据字典有效状态） -->
+	<delete id="deleteDictionary"  parameterType="java.lang.String" >
+		update sys_dic sd set sd.enable_delete = '2'
+	</delete>
+	
+</mapper>
