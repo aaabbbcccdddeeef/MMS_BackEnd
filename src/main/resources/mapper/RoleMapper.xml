@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csh.mms.dao.RoleDao">
+    <select id="getRoleList" resultType="com.csh.mms.dto.RoleDto" parameterType="java.lang.String" >
+        select * from sys_role sr where 1=1 and sr.enable_delete = '1'
+        <if test="id != null and id != ''">and sr.id=#{id}</if>
+        <if test="userId != null and userId != ''">and sr.id=#{userId}</if>
+        <if test="roleName != null and roleName != ''">and sr.role_name like concat('%',#{roleName},'%')</if>
+        <if test="roleCode != null and roleCode != ''">and sr.role_code like concat('%',#{roleCode},'%')</if>
+        <if test="createTime != null and createTime != ''">and sr.create_time =#{createTime}</if>
+        <if test="creator != null and creator != ''">and sr.creator like concat('%',#{creator},'%')</if>
+        order by sr.create_time desc 
+	</select>
+	<!-- 新增角色 -->
+	<insert id="insertRole" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="id">
+		insert into sys_role
+			(id, user_id, role_name, role_code, role_description, creator_id, creator, create_time, modifier_id, modifier, update_time, enable_delete, remark)
+			values (#{id}, #{userId}, #{roleName}, #{roleCode}, #{roleDescription}, #{creatorId}, #{creator}, #{createTime}, #{modifierId}, #{modifier}, #{updateTime}, #{enableDelete}, #{remark})
+	</insert>
+	<!-- 修改角色信息 -->
+	<update id="updateRole"  parameterType="java.lang.String" >
+		update sys_role
+			<trim prefix="set" suffixOverrides=",">
+				<if test="userId !=null">user_id=#{userId},</if>
+				<if test="roleName !=null">role_name=#{roleName},</if>
+				<if test="roleCode !=null">role_code=#{roleCode},</if>
+				<if test="roleDescription !=null">role_description=#{roleDescription},</if>
+			</trim>
+		where id=#{id}
+			<!-- (id, account, password, name, sex, icon, mobile_phone, alias, mial, slogan, enable_delete,remark)
+			vaules (#{id}, #{account}, #{password}, #{name}, #{sex}, #{icon}, #{mobile_phone}, #{alias}, #{mail}, #{slogan}, #{enable_delete}, #{remark}) -->
+	</update>
+	
+</mapper>
