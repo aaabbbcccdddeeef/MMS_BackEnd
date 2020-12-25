@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.csh.mms.dao.PermissionDao">
+    <select id="getPermList" resultType="com.csh.mms.dto.PermissionDto" parameterType="java.lang.String" >
+        select * from sys_permission sp where 1=1 and sp.enable_delete = '1'
+        <if test="id != null and id != ''">and sp.id=#{id}</if>
+        <if test="permName != null and permName != ''">and sp.permisson_name like concat('%',#{permName},'%')}</if>
+        <!-- <if test="roleCode != null and roleCode != ''">and sp.permisson_code like concat('%',#{roleCode},'%')</if> -->
+        <if test="createTime != null and createTime != ''">and sp.create_time =#{createTime}</if>
+        <if test="creator != null and creator != ''">and sp.creator like concat('%',#{creator},'%')</if>
+        order by sp.create_time desc 
+	</select>
+</mapper>
