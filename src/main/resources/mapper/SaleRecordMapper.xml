@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.csh.mms.dao.SaleRecordDao">
-    <!-- 根据id查询销售记录-->
+    <!-- 根据id查询销售记录详情-->
     <select id="getSaleRecord" resultType="com.csh.mms.domain.SaleRecord" parameterType="java.lang.String" >
-        select * from sale_record pi where pi.id = #{id} and pi.enable_delete ='1'
+        select * from sale_record pi where pi.id = #{id}
 	</select>
 	
 	<!-- 新增销售记录 -->
@@ -39,4 +39,14 @@
 		update sale_record pi set pi.enable_delete = '2'
 	</delete>
 	
+	<select id="getSaleList" resultType="com.csh.mms.dto.SaleInventoryProdDto" parameterType="java.lang.String" >
+        select * from sale_record sr where 1=1 and  sr.enable_delete = '1'
+        <if test="id != null and id != ''">and sr.id=#{id}</if>
+        <if test="productionId != null and productionId != ''">and sr.production_id=#{productionId}</if>
+        <if test="orderId != null and orderId != ''">and sr.order_id like concat('%',#{orderId},'%')</if>
+        <if test="creator != null and creator != ''">and sr.creator like concat('%',#{creator},'%')</if>
+        <if test="createTime != null and createTime != ''">and sr.create_time=#{createTime}</if>
+        <if test="faultType != null and faultType != ''">and sr.fault_type=#{faultType}</if>
+        order by sr.create_time desc 
+	</select>
 </mapper>

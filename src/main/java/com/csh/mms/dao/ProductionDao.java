@@ -3,6 +3,8 @@ package com.csh.mms.dao;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.csh.mms.domain.ProductionInfo;
+import com.csh.mms.dto.InventoryProdDto;
+import com.github.pagehelper.Page;
 /**
  * 
  * @ClassName  UserDao 
@@ -21,6 +23,8 @@ public interface ProductionDao {
 	ProductionInfo getProdInfo(String id);
 
 	ProductionInfo updateProd(ProductionInfo pordInfo);
+
+	Page<InventoryProdDto> getProdList(InventoryProdDto prod);
 
 
 }

@@ -21,8 +21,10 @@ public class ProductionInfo {
 	private String color1;
 	private String color2;
 	private String pack;
+	private String creatorId;
 	private String creator;
 	private Date createTime;
+	private String modifierId;
 	private String modifier;
 	private Date updateTime;
 	private String enableDelete;
@@ -122,5 +124,17 @@ public class ProductionInfo {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getCreatorId() {
+		return creatorId;
+	}
+	public void setCreatorId(String creatorId) {
+		this.creatorId = creatorId;
+	}
+	public String getModifierId() {
+		return modifierId;
+	}
+	public void setModifierId(String modifierId) {
+		this.modifierId = modifierId;
 	}
 }

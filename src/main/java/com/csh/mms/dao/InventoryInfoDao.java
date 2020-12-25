@@ -4,6 +4,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.csh.mms.domain.InventoryInfo;
+import com.csh.mms.dto.InventoryProdDto;
+import com.github.pagehelper.Page;
 
 @Mapper
 public interface InventoryInfoDao {
@@ -15,5 +17,7 @@ public interface InventoryInfoDao {
 	InventoryInfo updateInventory(InventoryInfo inventoryInfo);
 
 	InventoryInfo deleteInventory(@Param("id") String id);
+
+	Page<InventoryInfo> getInventoryPage(InventoryProdDto inventoryProdDto);
 
 }

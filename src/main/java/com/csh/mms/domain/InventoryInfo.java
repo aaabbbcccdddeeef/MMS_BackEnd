@@ -2,6 +2,8 @@ package com.csh.mms.domain;
 
 import java.sql.Date;
 
+import net.sf.jsqlparser.expression.DateTimeLiteralExpression.DateTime;
+
 /**
  * 
  * @ClassName  InventoryInfoDomain 
@@ -17,10 +19,12 @@ public class InventoryInfo {
 	private String arrivalBatch;
 	private String per;
 	private String suite;
+	private String creatorId;
 	private String creator;
-	private Date createTime;
+	private DateTime createTime;
+	private String modifierId;
 	private String modifier;
-	private Date updateTime;
+	private DateTime updateTime;
 	private String inventoryWarning;
 	private String enableDelete;
 	private String remark;
@@ -60,23 +64,11 @@ public class InventoryInfo {
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
-	public Date getCreateTime() {
-		return createTime;
-	}
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
 	public String getModifier() {
 		return modifier;
 	}
 	public void setModifier(String modifier) {
 		this.modifier = modifier;
-	}
-	public Date getUpdateTime() {
-		return updateTime;
-	}
-	public void setUpdateTime(Date updateTime) {
-		this.updateTime = updateTime;
 	}
 	public String getInventoryWarning() {
 		return inventoryWarning;
@@ -95,6 +87,42 @@ public class InventoryInfo {
 	}
 	public void setEnableDelete(String enableDelete) {
 		this.enableDelete = enableDelete;
+	}
+	public String getCreatorId() {
+		return creatorId;
+	}
+	public void setCreatorId(String creatorId) {
+		this.creatorId = creatorId;
+	}
+	public String getModifierId() {
+		return modifierId;
+	}
+	public void setModifierId(String modifierId) {
+		this.modifierId = modifierId;
+	}
+	/**
+	 * @return the createTime
+	 */
+	public DateTime getCreateTime() {
+		return createTime;
+	}
+	/**
+	 * @param createTime the createTime to set
+	 */
+	public void setCreateTime(DateTime createTime) {
+		this.createTime = createTime;
+	}
+	/**
+	 * @return the updateTime
+	 */
+	public DateTime getUpdateTime() {
+		return updateTime;
+	}
+	/**
+	 * @param updateTime the updateTime to set
+	 */
+	public void setUpdateTime(DateTime updateTime) {
+		this.updateTime = updateTime;
 	}
 	
 }

@@ -6,14 +6,20 @@
         select * from sys_user su where su.account = #{account}
 	</select>
     <!-- 根据账号查询用户信息-->
-    <select id="getUserById" resultType="com.csh.mms.domain.SysUser" parameterType="java.lang.String" >
-        select * from sys_user su where su.id = #{id}
+    <select id="getUserList" resultType="com.csh.mms.dto.UserRolePermissionDto" parameterType="java.lang.String" >
+        select * from sys_user su where 1=1 and su.enable_delete = '1'
+        <if test="id != null and id != ''">and su.id=#{id}</if>
+        <if test="account != null and account != ''">and su.account like concat('%',#{account},'%')</if>
+        <if test="name != null and name != ''">and su.name like concat('%',#{name},'%')</if>
+        <if test="alias != null and alias != ''">and su.alias like concat('%',#{alias},'%')</if>
+        <if test="sex != null and sex != ''">and su.sex=#{sex}</if>
+        order by su.create_time asc 
 	</select>
 	<!-- 新增用户信息 -->
-	<insert id="insertUser" parameterType="java.lang.String" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insertUser" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="id">
 		insert into sys_user
-			(id, account, password, name, sex, icon, mobile_phone, alias, mail, slogan, enable_delete,remark)
-			vaules (#{id}, #{account}, #{password}, #{name}, #{sex}, #{icon}, #{mobile_phone}, #{alias}, #{mail}, #{slogan}, #{enable_delete}, #{remark})
+			(id, account, password, name, sex, icon, mobile_phone, alias, mail, slogan, creator_id, creator, create_time, modifier_id, modifier, update_time, enable_delete,remark)
+			values (#{id}, #{account}, #{password}, #{name}, #{sex}, #{icon}, #{mobilePhone}, #{alias}, #{mail}, #{slogan}, #{creatorId}, #{creator}, #{createTime}, #{modifierId}, #{modifier}, #{updateTime}, #{enableDelete}, #{remark})
 	</insert>
 	<!-- 修改用户信息 -->
 	<update id="updateUser"  parameterType="java.lang.String" >
@@ -35,8 +41,8 @@
 			vaules (#{id}, #{account}, #{password}, #{name}, #{sex}, #{icon}, #{mobile_phone}, #{alias}, #{mail}, #{slogan}, #{enable_delete}, #{remark}) -->
 	</update>
 	<!-- 删除用户信息 -->
-	<delete id="deleteUser"  parameterType="java.lang.String" >
-		delete from sys_user where id = #{id}
+	<delete id="deleteUser"  parameterType="map" >
+		update sys_user su set su.enable_delete = '2' where su.id=#{id}
 	</delete>
 	
 </mapper>

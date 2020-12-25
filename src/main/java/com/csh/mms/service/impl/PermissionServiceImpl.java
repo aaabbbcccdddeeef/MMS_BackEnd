@@ -6,19 +6,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.csh.mms.dao.PermissionDao;
 import com.csh.mms.domain.SysPermission;
+import com.csh.mms.dto.PermissionDto;
 import com.csh.mms.service.PermissionService;
+import com.github.pagehelper.Page;
 
 @Service
 public class PermissionServiceImpl implements PermissionService{
 	
 	@Autowired
 	private PermissionDao permissionDao;
-
-	@Override
-	public SysPermission getPermission(String id) {
-		SysPermission permission = permissionDao.getPermission(id);
-		return permission;
-	}
 
 	@Override
 	@Transactional
@@ -39,6 +35,11 @@ public class PermissionServiceImpl implements PermissionService{
 	public SysPermission deletePermission(String id) {
 		SysPermission permission = permissionDao.deletePermission(id);
 		return permission;
+	}
+
+	@Override
+	public Page<PermissionDto> getPermList(PermissionDto dto) {
+		return permissionDao.getPermList(dto);
 	}
 	
 }

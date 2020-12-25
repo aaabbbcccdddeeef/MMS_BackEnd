@@ -1,12 +1,16 @@
 package com.csh.mms.service.impl;
 
- 
- import org.springframework.beans.factory.annotation.Autowired;
-import com.csh.mms.domain.SaleRecord;
- import com.csh.mms.service.SaleRecordService;
- import com.csh.mms.dao.SaleRecordDao;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class SaleRecordServiceImpl implements SaleRecordService {
+import com.csh.mms.dao.SaleRecordDao;
+import com.csh.mms.domain.SaleRecord;
+import com.csh.mms.dto.SaleInventoryProdDto;
+import com.csh.mms.service.SaleService;
+import com.github.pagehelper.Page;
+
+@Service
+public class SaleRecordServiceImpl implements SaleService {
 	
 	@Autowired
 	private SaleRecordDao saleRecordDao;
@@ -33,6 +37,12 @@ public class SaleRecordServiceImpl implements SaleRecordService {
 	public SaleRecord deleteSaleRecord(String id) {
 		SaleRecord saleRecordo = saleRecordDao.deleteSaleRecord(id);
 		return saleRecordo;
+	}
+
+	@Override
+	public Page<SaleInventoryProdDto> getSaleList(SaleInventoryProdDto dto) {
+		Page<SaleInventoryProdDto> data = saleRecordDao.getSaleList(dto);
+		return data;
 	}
 
 
