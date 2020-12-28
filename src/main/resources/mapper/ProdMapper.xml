@@ -6,12 +6,10 @@
         select * from production_info pi where pi.id = #{id}
 	</select>
 	<!-- 新增产品信息 -->
-	<insert id="insertProd" parameterType="java.lang.String" useGeneratedKeys="true" keyProperty="id">
+	<insert id="insertProd" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="id">
 		insert into production_info
-			(id, production_name, production_type, production_type_id, frequency, size, pitch, color1, color2, pack,
-				 creator, create_time, modifier, update_time, enable_delete, remark)
-			vaules (#{id}, #{productionName}, #{productionType}, #{productionTypeId}, #{frequency}, #{size}, #{pitch},
-				 #{color1}, #{color2}, #{pack}, #{creator}, #{create_time}, #{modifier}, #{update_time}, #{enableDelete}, #{remark})
+			(id, production_name, production_type, production_type_id, frequency, size, pitch, color1, color2, pack, creator_id, creator, create_time, modifier_id, modifier, update_time, enable_delete, remark)
+			values (#{id}, #{productionName}, #{productionType}, #{productionTypeId}, #{frequency}, #{size}, #{pitch}, #{color1}, #{color2}, #{pack}, #{creatorId}, #{creator}, #{createTime}, #{modifierId}, #{modifier}, #{updateTime}, #{enableDelete}, #{remark})
 	</insert>
 	<!-- 修改产品信息 -->
 	<update id="updateProd"  parameterType="java.lang.String" >
@@ -29,17 +27,19 @@
 				<if test="creator !=null">creator=#{creator},</if>
 				<if test="createTime !=null">create_time=#{createTime},</if>
 				<if test="modifier !=null">modifier=#{modifier},</if>
-				<if test="update_time !=null">update_time=#{update_time},</if>
+				<if test="updateTime !=null">update_time=#{updateTime},</if>
 				<if test="enableDelete !=null">enable_delete=#{enableDelete},</if>
 				<if test="remark !=null">remark=#{remark},</if>
 			</trim>
+		where id =#{id}
 	</update>
 	<!-- 删除产品信息（逻辑删除，改变产品有效状态） -->
 	<delete id="deleteProd"  parameterType="java.lang.String" >
-		update production_info pi set pi.enable_delete = '2'
+		update production_info set enable_delete = '2' where id = #{id}
 	</delete>
 	<select id="getProdList" resultType="com.csh.mms.dto.InventoryProdDto" parameterType="java.lang.String" >
         select * from production_info pi where 1=1 and pi.enable_delete = '1'
+			<if test="id !=null and id != ''">and pi.id=#{id}</if>
 			<if test="productionName !=null and productionName != ''">and pi.production_name like concat ('%',#{productionName},'%')</if>
 			<if test="productionType !=null and productionType != ''">and pi.production_type=#{productionType}</if>
 			<if test="frequency !=null and frequency != ''">and pi.frequency ike concat ('%',#{frequency},'%')</if>

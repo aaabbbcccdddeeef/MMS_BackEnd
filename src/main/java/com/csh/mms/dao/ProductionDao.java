@@ -16,15 +16,15 @@ import com.github.pagehelper.Page;
 @Mapper
 public interface ProductionDao {
 
-	ProductionInfo insertProd(ProductionInfo pordInfo);
-
-	ProductionInfo daleteInfo(String id);
+	void insertProd(InventoryProdDto dto);
 
 	ProductionInfo getProdInfo(String id);
 
-	ProductionInfo updateProd(ProductionInfo pordInfo);
+	void updateProd(InventoryProdDto dto);
 
 	Page<InventoryProdDto> getProdList(InventoryProdDto prod);
+
+	void deleteProd(String id);
 
 
 }

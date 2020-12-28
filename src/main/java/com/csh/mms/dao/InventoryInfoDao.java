@@ -1,23 +1,20 @@
 package com.csh.mms.dao;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
-import com.csh.mms.domain.InventoryInfo;
 import com.csh.mms.dto.InventoryProdDto;
 import com.github.pagehelper.Page;
 
 @Mapper
 public interface InventoryInfoDao {
 
-	InventoryInfo getInventoryInfo(@Param("id") String id);
+	void updateInventory(InventoryProdDto dto);
 
-	InventoryInfo insertInventory(InventoryInfo inventoryInfo);
+	void deleteInventory(InventoryProdDto dto);
 
-	InventoryInfo updateInventory(InventoryInfo inventoryInfo);
+	Page<InventoryProdDto> getInventoryList(InventoryProdDto dto);
 
-	InventoryInfo deleteInventory(@Param("id") String id);
 
-	Page<InventoryInfo> getInventoryPage(InventoryProdDto inventoryProdDto);
+	void insertInventory(InventoryProdDto dto);
 
 }

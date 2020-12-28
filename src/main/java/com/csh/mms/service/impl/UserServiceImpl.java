@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void updatetUser(UserRolePermissionDto dto) {
-		userDao.updatetUser(dto);
+	public void updateUser(UserRolePermissionDto dto) {
+		userDao.updateUser(dto);
 	}
 
 	@Override

@@ -10,10 +10,9 @@ public interface UserService {
 	
 	void insertUser (UserRolePermissionDto dto);
 
-	void updatetUser (UserRolePermissionDto dto);
+	void updateUser (UserRolePermissionDto dto);
 	
 	void deleteUser (String id);
-
 
 	Page<UserRolePermissionDto> getUserList(UserRolePermissionDto dto);
 }

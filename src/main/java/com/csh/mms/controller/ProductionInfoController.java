@@ -2,12 +2,9 @@ package com.csh.mms.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,11 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.csh.mms.domain.ProductionInfo;
 import com.csh.mms.dto.InventoryProdDto;
+import com.csh.mms.dto.UserRolePermissionDto;
 import com.csh.mms.service.ProductionInfoService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-
-import net.sf.json.JSONObject;
 
 /**
  * 
@@ -72,19 +68,19 @@ public class ProductionInfoController {
 	 * @return Map<String,Object>
 	 */
 	@PostMapping("/insertProd")
-	public JSONObject insertProd(HttpServletRequest request, @RequestBody ProductionInfo pordInfo) {
-		HttpSession session = request.getSession();
-		JSONObject json = new JSONObject();
-		ProductionInfo pordInfoResult = prodService.insertProd(pordInfo);
-		if(pordInfo.getId() != null) {
-			json.put("code", "200");
-			json.put("msg", "产品添加成功！");
-			json.put("pordInfo", pordInfoResult);
-			return json;
+	public Map<String, Object> insertProd(@RequestBody InventoryProdDto dto) {
+		Map<String, Object> map = new HashMap<>();
+		if(dto != null) {
+			dto.setId(UUID.randomUUID().toString());
+			dto.setEnableDelete("1");
+			prodService.insertProd(dto);
+			map.put("code", 200);
+			InventoryProdDto dto1 = new InventoryProdDto();
+			return getProdList(dto1);
 		}else {
-			json.put("code", "0");
-			json.put("msg", "产品添加失败！");
-			return json;
+			map.put("code", 0);
+        	map.put("msgcode", "产品数据是空，添加失败！");
+        	return map;
 		}
 	}
 	
@@ -96,18 +92,17 @@ public class ProductionInfoController {
 	 * @return JSONObject
 	 */
 	@PostMapping("/updateProd")
-	public JSONObject updateProd(ProductionInfo pordInfo) {
-		JSONObject json = new JSONObject();
-		pordInfo = (ProductionInfo) prodService.updateProd(pordInfo);
-		if(pordInfo.getId() != null) {
-			json.put("code", "200");
-			json.put("msg", "产品信息修改成功！");
-			json.put("pordInfo", pordInfo);
-			return json;
+	public Map<String, Object> updateProd(@RequestBody InventoryProdDto dto) {
+		Map<String, Object> map = new HashMap<>();
+		if(dto != null) {
+			prodService.updateProd(dto);
+			map.put("code", 200);
+			InventoryProdDto dto1 = new InventoryProdDto();
+			return getProdList(dto1);
 		}else {
-			json.put("code", "0");
-			json.put("msg", "产品信息修改失败！");
-			return json;
+			map.put("code", 0);
+        	map.put("msgcode", "产品数据是空，修改失败！");
+        	return map;
 		}
 	}
 
@@ -119,25 +114,19 @@ public class ProductionInfoController {
 	 * @return Map<String,Object>
 	 */
 	@PostMapping("/deleteProd")
-	public Map<String, Object> deleteProd(String id) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		if (StringUtils.isEmpty(id)) {
-			map.put("statusCode", "0");
-			map.put("msg", "数据id是空，删除失败！");
-			return map;
-		} else {
-			ProductionInfo resultDelet = prodService.deleteProd(id);
-			if(resultDelet !=null) {
-				map.put("statusCode", "200");
-				map.put("msg", "产品数据删除成功！");
-				return map;
-			}else {
-				map.put("statusCode", "1");
-				map.put("msg", "数据异常，删除失败！");
-				return map;
-			}
-			
-		}
+	public Map<String, Object> deleteProd(@RequestBody InventoryProdDto dto) {
+		Map<String, Object> map = new HashMap<>();
+        if (StringUtils.isEmpty(dto.getId())) {
+        	map.put("code", 0);
+        	map.put("msgcode", "删除数据id是空，删除失败！");
+        	return map;
+        }else {
+        	prodService.deleteProd(dto.getId());
+        	map.put("code", 200);
+        	dto.setId("");
+        	InventoryProdDto dto1 = new InventoryProdDto();
+        	return getProdList(dto1);
+        }
 	}
 	@PostMapping("/getProdList")
 	public Map<String, Object> getProdList(@RequestBody InventoryProdDto prod){
