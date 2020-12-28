@@ -16,7 +16,7 @@
 	<insert id="insertDictionary" parameterType="java.lang.String" useGeneratedKeys="true" keyProperty="id">
 		insert into sys_dic
 			(id, name, code, code_name, number, enable_use, enable_delete, creator, create_time, modifier, update_time, remark)
-			vaules (#{id}, #{name}, #{code}, #{codeName}, #{number}, #{enableUse}, #{enableDelete}, #{creator}, #{create_time}, #{modifier}, #{remark})
+			values (#{id}, #{name}, #{code}, #{codeName}, #{number}, #{enableUse}, #{enableDelete}, #{creator}, #{create_time}, #{modifier}, #{remark})
 	</insert>
 	<!-- 修改数据字典 -->
 	<update id="updateDictionary"  parameterType="java.lang.String" >

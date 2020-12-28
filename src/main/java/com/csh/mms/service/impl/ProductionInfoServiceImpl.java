@@ -24,28 +24,27 @@ public class ProductionInfoServiceImpl implements ProductionInfoService{
 	}
 
 	@Override
-	public ProductionInfo deleteProd(String id) {
-		ProductionInfo prod = prodDao.daleteInfo(id);
-		return prod;
-	}
-
-	@Override
-	public ProductionInfo insertProd(ProductionInfo pordInfo) {
-		ProductionInfo prod = prodDao.insertProd(pordInfo);
-		return prod;
-	}
-
-	@Override
-	public ProductionInfo updateProd(ProductionInfo pordInfo) {
-		ProductionInfo pordInfoResult = prodDao.updateProd(pordInfo);
-		return pordInfoResult;
-	}
-
-	@Override
 	public Page<InventoryProdDto> getProdList(InventoryProdDto prod) {
 		Page<InventoryProdDto> list = prodDao.getProdList(prod);
 		return list;
 	}
 
-	
+	@Override
+	public void deleteProd(String id) {
+		prodDao.deleteProd(id);
+	}
+
+	@Override
+	@Transactional
+	public void updateProd(InventoryProdDto dto) {
+		prodDao.updateProd(dto);
+	}
+
+	@Override
+	@Transactional
+	public void insertProd(InventoryProdDto dto) {
+		prodDao.insertProd(dto);
+		
+	}
+
 }

@@ -1,19 +1,16 @@
 package com.csh.mms.service;
 
-import com.csh.mms.domain.InventoryInfo;
 import com.csh.mms.dto.InventoryProdDto;
 import com.github.pagehelper.Page;
 
 public interface InventoryInfoService {
 
-	InventoryInfo getInventoryInfo(String id);
+	void insertInventory(InventoryProdDto dto);
 
-	InventoryInfo insertInventory(InventoryInfo inventoryInfo);
+	void updateInventory(InventoryProdDto dto);
 
-	InventoryInfo updateInventory(InventoryInfo inventoryInfo);
+	void deleteInventory(InventoryProdDto dto);
 
-	InventoryInfo deleteInventory(String id);
-
-	Page<InventoryInfo> getInventoryPage(InventoryProdDto inventoryProdDto);
+	Page<InventoryProdDto> getInventoryList(InventoryProdDto dto);
 
 }

@@ -11,7 +11,7 @@
 		insert into sale_record
 			(id, production_id, order_id, amount, price, total, fault_type, fault_description, creator, create_time,
 				  modifier, update_time, remark)
-			vaules (#{id}, #{productionId}, #{orderId}, #{amount}, #{price}, #{total}, #{faultType},
+			values (#{id}, #{productionId}, #{orderId}, #{amount}, #{price}, #{total}, #{faultType},
 				 #{faultDescription}, #{creator}, #{createTime}, #{modifier}, #{update_time}, #{remark})
 	</insert>
 	<!-- 修改销售记录 -->

@@ -9,9 +9,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.csh.mms.domain.SysUser;
 import com.csh.mms.dto.RoleDto;
 import com.csh.mms.dto.UserRolePermissionDto;
 import com.csh.mms.service.RoleService;
@@ -97,6 +97,33 @@ public class RoleController {
         	map.put("msgcode", "角色数据是空，修改失败！");
         	return map;
 		}
+    }
+	
+	@RequestMapping(value = "/deleteRole", method = RequestMethod.POST)
+    public Map<String, Object> deleteRole(@RequestBody RoleDto dto) {
+		Map<String, Object> map = new HashMap<>();
+        if (StringUtils.isEmpty(dto.getId())) {
+        	map.put("code", 0);
+        	map.put("msgcode", "删除数据id是空，删除失败！");
+        	return map;
+        }else {
+        	roleService.deleteRole(dto.getId());
+        	map.put("code", 200);
+        	dto.setId("");
+        	PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+    		Page<RoleDto> resultList = roleService.getRoleList(dto);
+    		if(resultList != null) {
+    			map.put("code", 200);
+    			map.put("resultList", resultList);
+    			map.put("totalpage", resultList.getPages());
+    			map.put("totalCount", resultList.getTotal());
+    			return map;
+    		}else {
+    			map.put("code", 0);
+    			map.put("msg", "查询失败！");
+    			return map;
+    		}
+        }
     }
 
 }

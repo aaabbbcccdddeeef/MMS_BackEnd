@@ -10,12 +10,12 @@ public interface ProductionInfoService {
 
 	ProductionInfo getProdInfo(@Param("id") String id);
 
-	ProductionInfo deleteProd(@Param("id") String id);
+	void deleteProd(@Param("id") String id);
 
-	ProductionInfo insertProd(ProductionInfo pordInfo);
-
-	ProductionInfo updateProd(ProductionInfo pordInfo);
+	void updateProd(InventoryProdDto dto);
 
 	Page<InventoryProdDto> getProdList(InventoryProdDto prod);
+
+	void insertProd(InventoryProdDto dto);
 
 }

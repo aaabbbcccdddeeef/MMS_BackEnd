@@ -2,8 +2,8 @@ package com.csh.mms.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,13 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.csh.mms.domain.InventoryInfo;
 import com.csh.mms.dto.InventoryProdDto;
 import com.csh.mms.service.InventoryInfoService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-
-import net.sf.json.JSONObject;
 
 /**
  * 
@@ -33,35 +30,6 @@ public class InventoryInfoController {
 	
 	@Autowired
 	private InventoryInfoService inventoryService;
-	/**
-	 * 
-	 * @Title  getInventoryInfo 
-	 * @Description  查询库存信息
-	 * @param id
-	 * @return JSONObject
-	 */
-	@PostMapping("/getInventory")
-	public JSONObject getInventoryInfo(@Param(value = "id") String id) {
-		JSONObject inventoryJson = new JSONObject();
-		InventoryInfo inventoryInfo = new InventoryInfo();
-		if(StringUtils.isEmpty(id)) {
-			inventoryJson.put("code", "0");
-			inventoryJson.put("msg", "选择数据id是空，查看失败！");
-			return inventoryJson;
-		}else {
-			inventoryInfo = inventoryService.getInventoryInfo(id);
-			if(inventoryInfo != null) {
-				inventoryJson.put("code", "200");
-				inventoryJson.put("msg", "查询库存成功！");
-				inventoryJson.put("inventoryInfo", inventoryInfo);
-				return inventoryJson;
-			}else {
-				inventoryJson.put("code", "1");
-				inventoryJson.put("msg", "查询库存失败！");
-				return inventoryJson;
-			}
-		}
-	}
 	
 	/**
 	 * 
@@ -71,25 +39,20 @@ public class InventoryInfoController {
 	 * @return JSONObject
 	 */
 	@PostMapping("/insertInventory")
-	public JSONObject insertInventory(@Param(value = "inventoryInfo") InventoryInfo inventoryInfo) {
-		JSONObject inventoryJson = new JSONObject();
-		InventoryInfo inventoryInfo1 = new InventoryInfo();
-		if(StringUtils.isEmpty(inventoryInfo)) {
-			inventoryJson.put("code", "0");
-			inventoryJson.put("msg", "添加库存失败！");
-			return inventoryJson;
+	public Map<String, Object> insertInventory(@RequestBody InventoryProdDto dto) {
+		Map<String, Object> map = new HashMap<>();
+		if(dto != null) {
+			dto.setId(UUID.randomUUID().toString());
+			dto.setEnableDelete("1");
+			inventoryService.insertInventory(dto);
+			map.put("code", 200);
+			InventoryProdDto dto1 = new InventoryProdDto();
+			PageHelper.startPage(dto1.getPageNum(), dto1.getPageSize());
+			return getInventoryList(dto1);
 		}else {
-			inventoryInfo1 = inventoryService.insertInventory(inventoryInfo);
-			if(inventoryInfo != null) {
-				inventoryJson.put("code", "200");
-				inventoryJson.put("msg", "添加库存成功！");
-				inventoryJson.put("inventoryInfo", inventoryInfo1);
-				return inventoryJson;
-			}else {
-				inventoryJson.put("code", "1");
-				inventoryJson.put("msg", "添加库存失败！");
-				return inventoryJson;
-			}
+			map.put("code", 0);
+	    	map.put("msgcode", "用户数据是空，添加失败！");
+	    	return map;
 		}
 	}
 	
@@ -101,24 +64,19 @@ public class InventoryInfoController {
 	 * @return JSONObject
 	 */
 	@PostMapping("/updateInventory")
-	public JSONObject updateInventory(@Param(value = "inventoryInfo") InventoryInfo inventoryInfo) {
-		JSONObject inventoryJson = new JSONObject();
-		if(StringUtils.isEmpty(inventoryInfo)) {
-			inventoryJson.put("code", "0");
-			inventoryJson.put("msg", "更新数据失败！");
-			return inventoryJson;
+	public Map<String, Object> updateInventory(@RequestBody InventoryProdDto dto) {
+		Map<String, Object> map = new HashMap<>();
+		if(dto != null) {
+			inventoryService.updateInventory(dto);
+			map.put("code", 200);
+			InventoryProdDto dto1 = new InventoryProdDto();
+			dto1.setPageNum(dto.getPageNum());
+			dto1.setPageSize(dto.getPageSize());
+			return getInventoryList(dto1);
 		}else {
-			inventoryInfo = inventoryService.updateInventory(inventoryInfo);
-			if(inventoryInfo != null) {
-				inventoryJson.put("code", "200");
-				inventoryJson.put("msg", "更新库存成功！");
-				inventoryJson.put("inventoryInfo", inventoryInfo);
-				return inventoryJson;
-			}else {
-				inventoryJson.put("code", "1");
-				inventoryJson.put("msg", "更新库存失败！");
-				return inventoryJson;
-			}
+			map.put("code", 0);
+	    	map.put("msgcode", "用户数据是空，修改失败！");
+	    	return map;
 		}
 	}
 	
@@ -130,24 +88,18 @@ public class InventoryInfoController {
 	 * @return JSONObject
 	 */
 	@PostMapping("/deleteInventory")
-	public JSONObject deleteInventory(@Param(value = "id") String id) {
-		JSONObject inventoryJson = new JSONObject();
-		if(StringUtils.isEmpty(id)) {
-			inventoryJson.put("code", "0");
-			inventoryJson.put("msg", "删除数据失败！");
-			return inventoryJson;
+	public Map<String, Object> deleteInventory(@RequestBody InventoryProdDto dto) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if(StringUtils.isEmpty(dto)) {
+			map.put("code", "0");
+			map.put("msg", "删除数据失败！");
+			return map;
 		}else {
-			InventoryInfo inventoryInfo = inventoryService.deleteInventory(id);
-			if(inventoryInfo != null) {
-				inventoryJson.put("code", "200");
-				inventoryJson.put("msg", "删除数据成功！");
-				inventoryJson.put("inventoryInfo", id);
-				return inventoryJson;
-			}else {
-				inventoryJson.put("code", "1");
-				inventoryJson.put("msg", "删除数据失败！");
-				return inventoryJson;
-			}
+			inventoryService.deleteInventory(dto);
+			InventoryProdDto dto1 = new InventoryProdDto();
+			dto1.setPageNum(dto.getPageNum());
+			dto1.setPageSize(dto.getPageSize());
+			return getInventoryList(dto1);
 		}
 	}
 	
@@ -155,7 +107,7 @@ public class InventoryInfoController {
 	public Map<String, Object> getInventoryList(@RequestBody InventoryProdDto inventoryProdDto){
 		Map<String, Object> map = new HashMap<String, Object>();
 		PageHelper.startPage(inventoryProdDto.getPageNum(), inventoryProdDto.getPageSize());
-		Page<InventoryInfo> resultList = inventoryService.getInventoryPage(inventoryProdDto);
+		Page<InventoryProdDto> resultList = inventoryService.getInventoryList(inventoryProdDto);
 		if(resultList != null) {
 			map.put("code", 200);
 			map.put("resultList", resultList);

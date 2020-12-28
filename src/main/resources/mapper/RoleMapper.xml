@@ -30,5 +30,8 @@
 			<!-- (id, account, password, name, sex, icon, mobile_phone, alias, mial, slogan, enable_delete,remark)
 			vaules (#{id}, #{account}, #{password}, #{name}, #{sex}, #{icon}, #{mobile_phone}, #{alias}, #{mail}, #{slogan}, #{enable_delete}, #{remark}) -->
 	</update>
-	
+	<!-- 删除角色 -->
+	<delete id="deleteUser"  parameterType="map" >
+		update sys_role sr set sr.enable_delete = '2' where sr.id=#{id}
+	</delete>
 </mapper>

@@ -145,12 +145,6 @@ public class InventoryProdDto {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public String getEnableDelete() {
-		return enableDelete;
-	}
-	public void setEnableDelete(String enableDelete) {
-		this.enableDelete = enableDelete;
-	}
 	public String getCreatorId() {
 		return creatorId;
 	}
@@ -198,6 +192,12 @@ public class InventoryProdDto {
 	 */
 	public void setUpdateTime(Timestamp updateTime) {
 		this.updateTime = updateTime;
+	}
+	public String getEnableDelete() {
+		return enableDelete;
+	}
+	public void setEnableDelete(String enableDelete) {
+		this.enableDelete = enableDelete;
 	}
 	
 }

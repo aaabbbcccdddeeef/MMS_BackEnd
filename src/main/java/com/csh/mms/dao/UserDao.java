@@ -19,7 +19,7 @@ public interface UserDao {
 
 	void insertUser(UserRolePermissionDto dto);
 
-	void updatetUser(UserRolePermissionDto dto);
+	void updateUser(UserRolePermissionDto dto);
 
 	void deleteUser(@Param("id") String id);
 

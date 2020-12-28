@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.csh.mms.dao.PermissionDao;
-import com.csh.mms.domain.SysPermission;
 import com.csh.mms.dto.PermissionDto;
 import com.csh.mms.service.PermissionService;
 import com.github.pagehelper.Page;
@@ -18,28 +17,25 @@ public class PermissionServiceImpl implements PermissionService{
 
 	@Override
 	@Transactional
-	public SysPermission insertPermission(SysPermission permission) {
-		SysPermission resultPermission = permissionDao.insertPermission(permission);
-		return resultPermission;
+	public void insertPermission(PermissionDto dto) {
+		permissionDao.insertPermission(dto);
 	}
 
 	@Override
 	@Transactional
-	public SysPermission updatePermission(SysPermission permission) {
-		permission = permissionDao.updatePermission(permission);
-		return permission;
+	public void updatePermission(PermissionDto dto) {
+		permissionDao.updatePermission(dto);
 	}
 
 	@Override
 	@Transactional
-	public SysPermission deletePermission(String id) {
-		SysPermission permission = permissionDao.deletePermission(id);
-		return permission;
+	public void deletePermission(PermissionDto dto) {
+		permissionDao.deletePermission(dto);
 	}
 
 	@Override
-	public Page<PermissionDto> getPermList(PermissionDto dto) {
-		return permissionDao.getPermList(dto);
+	public Page<PermissionDto> getPermissionList(PermissionDto dto) {
+		return permissionDao.getPermissionList(dto);
 	}
 	
 }

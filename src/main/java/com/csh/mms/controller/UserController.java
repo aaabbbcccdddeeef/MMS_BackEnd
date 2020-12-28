@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.csh.mms.domain.SysUser;
 import com.csh.mms.dto.UserRolePermissionDto;
 import com.csh.mms.service.UserService;
 import com.github.pagehelper.Page;
@@ -62,15 +61,31 @@ public class UserController {
 		}
     }
 	
-	@PostMapping("/updatetUser")
-    public SysUser updatetUser(@RequestBody UserRolePermissionDto dto) {
-		SysUser resultUser = new SysUser();
-        if (StringUtils.isEmpty(dto)) {
-        	return null;
-        }else {
-        	userService.updatetUser(dto);
-        	return resultUser;
-        }
+	@PostMapping("/updateUser")
+    public Map<String, Object> updateUser(@RequestBody UserRolePermissionDto dto) {
+		Map<String, Object> map = new HashMap<>();
+		if(dto != null) {
+			userService.updateUser(dto);
+			map.put("code", 200);
+			UserRolePermissionDto dto1 = new UserRolePermissionDto();
+			PageHelper.startPage(dto1.getPageNum(), dto1.getPageSize());
+    		Page<UserRolePermissionDto> resultList = userService.getUserList(dto1);
+    		if(resultList != null) {
+    			map.put("code", 200);
+    			map.put("resultList", resultList);
+    			map.put("totalpage", resultList.getPages());
+    			map.put("totalCount", resultList.getTotal());
+    			return map;
+    		}else {
+    			map.put("code", 1);
+    			map.put("msg", "查询失败！");
+    			return map;
+    		}
+		}else {
+			map.put("code", 0);
+        	map.put("msgcode", "用户数据是空，添加失败！");
+        	return map;
+		}
     }
 	
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)

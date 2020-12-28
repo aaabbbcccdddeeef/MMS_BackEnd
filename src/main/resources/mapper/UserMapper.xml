@@ -13,7 +13,7 @@
         <if test="name != null and name != ''">and su.name like concat('%',#{name},'%')</if>
         <if test="alias != null and alias != ''">and su.alias like concat('%',#{alias},'%')</if>
         <if test="sex != null and sex != ''">and su.sex=#{sex}</if>
-        order by su.create_time asc 
+        order by su.create_time asc  
 	</select>
 	<!-- 新增用户信息 -->
 	<insert id="insertUser" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="id">
@@ -34,9 +34,9 @@
 				<if test="alias !=null">alias=#{alias},</if>
 				<if test="mail !=null">mail=#{mail},</if>
 				<if test="slogan !=null">slogan=#{slogan},</if>
-				<if test="enableDelete !=null">enable_delete=#{enableDelete},</if>
 				<if test="remark !=null">remark=#{remark},</if>
 			</trim>
+		where id =#{id}
 			<!-- (id, account, password, name, sex, icon, mobile_phone, alias, mial, slogan, enable_delete,remark)
 			vaules (#{id}, #{account}, #{password}, #{name}, #{sex}, #{icon}, #{mobile_phone}, #{alias}, #{mail}, #{slogan}, #{enable_delete}, #{remark}) -->
 	</update>
