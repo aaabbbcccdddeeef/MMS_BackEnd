@@ -1,5 +1,6 @@
 package com.csh.mms.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.csh.mms.domain.SysUser;
+import com.csh.mms.dto.UserRoleDto;
 import com.csh.mms.service.InventoryInfoService;
 
 /**
@@ -34,22 +36,30 @@ import com.csh.mms.service.InventoryInfoService;
 @RequestMapping("/login")
 public class LoginController {
 
-	@Autowired
-	private InventoryInfoService inventoryService;
 
 	@PostMapping("/login")
-	public Map<String, Object> login(@RequestBody SysUser user) {
+	public Map<String, Object> login(@RequestBody UserRoleDto dto) {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		if (StringUtils.isEmpty(user.getAccount()) || StringUtils.isEmpty(user.getPassword())) {
+		if (StringUtils.isEmpty(dto.getAccount()) || StringUtils.isEmpty(dto.getPassword())) {
 			resultMap.put("code", 0);
 			resultMap.put("msg", "请输入用户名和密码！");
 			return resultMap;
 		} 
 		// 用户认证信息 
 		Subject	subject = SecurityUtils.getSubject();
-		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(user.getAccount(), user.getPassword());
+		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(dto.getAccount(), dto.getPassword());
 		try { // 进行验证，这里可以捕获异常，然后返回对应信息
 			subject.login(usernamePasswordToken);
+			boolean[] results = subject.hasRoles(Arrays.asList("admin", "businessRole", "query", "add", "edit", "delete"));
+			System.out.println(results[0] ? "拥有role1这个角色" : "没有role1这个角色");
+		    System.out.println(results[1] ? "拥有role2这个角色" : "没有role2这个角色");
+		    System.out.println(results[2] ? "拥有role3这个角色" : "没有role3这个角色");
+		    
+		    System.out.println(subject.hasAllRoles(Arrays.asList("admin", "businessRole", "query", "add", "edit", "delete")) ? "有角色"
+		            : "没有角色");
+//			subject.checkRole("admin");
+//			subject.checkPermissions("query", "add");
+		    System.out.println("+++++++++");
 		} catch (UnknownAccountException e) {
 			resultMap.put("code", 1);
 			resultMap.put("msg", "用户名不存在！");
@@ -69,7 +79,6 @@ public class LoginController {
 	}
 
 	@RequiresRoles("admin")
-
 	@GetMapping("/admin")
 	public String admin() {
 		return "admin success!";

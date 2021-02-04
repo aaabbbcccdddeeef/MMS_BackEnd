@@ -11,11 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 @ControllerAdvice
 @Slf4j
 public class SysExceptionHandler {
-
 	@ExceptionHandler
 	@ResponseBody
 	public String ErrorHandler(AuthorizationException e) {
-//		log.error("没有通过权限验证！", e);
 		return "没有通过权限验证！";
 	}
 }

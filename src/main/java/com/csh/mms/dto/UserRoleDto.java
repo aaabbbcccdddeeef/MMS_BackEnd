@@ -2,6 +2,7 @@ package com.csh.mms.dto;
 
 import java.sql.Blob;
 import java.sql.Timestamp;
+import java.util.Set;
 
 /**
  * 
@@ -11,7 +12,7 @@ import java.sql.Timestamp;
  * @date  2020年10月31日 下午10:21:09 
  *
  */
-public class UserRolePermissionDto {
+public class UserRoleDto {
 	
 	private String id;
 	private String account;
@@ -31,6 +32,7 @@ public class UserRolePermissionDto {
 	private String modifier;
 	private Timestamp updateTime;
 	private String remark;
+	private Set<RoleDto> roles;
 	public String getCreatorId() {
 		return creatorId;
 	}
@@ -67,22 +69,6 @@ public class UserRolePermissionDto {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	private String roleId;
-	private String roleName;
-	private String roleCode;
-	private String roleDescription;
-	private Timestamp roleCreateTime;
-	private String roleCreator;
-	private String roleRemark;
-	private String permId;
-	private String permUserId;
-	private String permRoleId;
-	private String permName;
-	private String permCode;
-	private String permCreator;
-	private String permModifier;
-	private Timestamp permCreateTime;
-	private Timestamp permUpdateTime;
 	private int pageNum = 1;
 	private int pageSize = 10;
 	public String getSex() {
@@ -115,90 +101,6 @@ public class UserRolePermissionDto {
 	public void setSlogan(String slogan) {
 		this.slogan = slogan;
 	}
-	public String getRoleId() {
-		return roleId;
-	}
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
-	}
-	public String getRoleName() {
-		return roleName;
-	}
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-	public String getRoleCode() {
-		return roleCode;
-	}
-	public void setRoleCode(String roleCode) {
-		this.roleCode = roleCode;
-	}
-	public String getRoleDescription() {
-		return roleDescription;
-	}
-	public void setRoleDescription(String roleDescription) {
-		this.roleDescription = roleDescription;
-	}
-	public String getRoleRemark() {
-		return roleRemark;
-	}
-	public void setRoleRemark(String roleRemark) {
-		this.roleRemark = roleRemark;
-	}
-	public String getPermId() {
-		return permId;
-	}
-	public void setPermId(String permId) {
-		this.permId = permId;
-	}
-	public String getPermUserId() {
-		return permUserId;
-	}
-	public void setPermUserId(String permUserId) {
-		this.permUserId = permUserId;
-	}
-	public String getPermRoleId() {
-		return permRoleId;
-	}
-	public void setPermRoleId(String permRoleId) {
-		this.permRoleId = permRoleId;
-	}
-	public String getPermName() {
-		return permName;
-	}
-	public void setPermName(String permName) {
-		this.permName = permName;
-	}
-	public String getPermCode() {
-		return permCode;
-	}
-	public void setPermCode(String permCode) {
-		this.permCode = permCode;
-	}
-	public String getPermCreator() {
-		return permCreator;
-	}
-	public void setPermCreator(String permCreator) {
-		this.permCreator = permCreator;
-	}
-	public String getPermModifier() {
-		return permModifier;
-	}
-	public void setPermModifier(String permModifier) {
-		this.permModifier = permModifier;
-	}
-	public Timestamp getPermCreateTime() {
-		return permCreateTime;
-	}
-	public void setPermCreateTime(Timestamp permCreateTime) {
-		this.permCreateTime = permCreateTime;
-	}
-	public Timestamp getPermUpdateTime() {
-		return permUpdateTime;
-	}
-	public void setPermUpdateTime(Timestamp permUpdateTime) {
-		this.permUpdateTime = permUpdateTime;
-	}
 	public int getPageNum() {
 		return pageNum;
 	}
@@ -214,27 +116,6 @@ public class UserRolePermissionDto {
 	/**
 	 * @return the roleCreator
 	 */
-	public String getRoleCreator() {
-		return roleCreator;
-	}
-	/**
-	 * @param roleCreator the roleCreator to set
-	 */
-	public void setRoleCreator(String roleCreator) {
-		this.roleCreator = roleCreator;
-	}
-	/**
-	 * @return the roleCreateTime
-	 */
-	public Timestamp getRoleCreateTime() {
-		return roleCreateTime;
-	}
-	/**
-	 * @param roleCreateTime the roleCreateTime to set
-	 */
-	public void setRoleCreateTime(Timestamp roleCreateTime) {
-		this.roleCreateTime = roleCreateTime;
-	}
 	public String getAccount() {
 		return account;
 	}
@@ -276,5 +157,11 @@ public class UserRolePermissionDto {
 	}
 	public void setEnableDelete(String enableDelete) {
 		this.enableDelete = enableDelete;
+	}
+	public Set<RoleDto> getRoles() {
+		return roles;
+	}
+	public void setRoles(Set<RoleDto> roles) {
+		this.roles = roles;
 	}
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.csh.mms.dto.UserRolePermissionDto;
+import com.csh.mms.dto.UserRoleDto;
 import com.csh.mms.service.UserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -33,16 +33,16 @@ public class UserController {
 	private UserService userService;
 
 	@PostMapping("/insertUser")
-    public Map<String, Object> inertUser(@RequestBody UserRolePermissionDto dto) {
+    public Map<String, Object> inertUser(@RequestBody UserRoleDto dto) {
 		Map<String, Object> map = new HashMap<>();
 		if(dto != null) {
 			dto.setId(UUID.randomUUID().toString());
 			dto.setEnableDelete("1");
 			userService.insertUser(dto);
 			map.put("code", 200);
-			UserRolePermissionDto dto1 = new UserRolePermissionDto();
+			UserRoleDto dto1 = new UserRoleDto();
 			PageHelper.startPage(dto1.getPageNum(), dto1.getPageSize());
-    		Page<UserRolePermissionDto> resultList = userService.getUserList(dto1);
+    		Page<UserRoleDto> resultList = userService.getUserList(dto1);
     		if(resultList != null) {
     			map.put("code", 200);
     			map.put("resultList", resultList);
@@ -62,14 +62,14 @@ public class UserController {
     }
 	
 	@PostMapping("/updateUser")
-    public Map<String, Object> updateUser(@RequestBody UserRolePermissionDto dto) {
+    public Map<String, Object> updateUser(@RequestBody UserRoleDto dto) {
 		Map<String, Object> map = new HashMap<>();
 		if(dto != null) {
 			userService.updateUser(dto);
 			map.put("code", 200);
-			UserRolePermissionDto dto1 = new UserRolePermissionDto();
+			UserRoleDto dto1 = new UserRoleDto();
 			PageHelper.startPage(dto1.getPageNum(), dto1.getPageSize());
-    		Page<UserRolePermissionDto> resultList = userService.getUserList(dto1);
+    		Page<UserRoleDto> resultList = userService.getUserList(dto1);
     		if(resultList != null) {
     			map.put("code", 200);
     			map.put("resultList", resultList);
@@ -89,7 +89,7 @@ public class UserController {
     }
 	
 	@RequestMapping(value = "/deleteUser", method = RequestMethod.POST)
-    public Map<String, Object> deleteUser(@RequestBody UserRolePermissionDto dto) {
+    public Map<String, Object> deleteUser(@RequestBody UserRoleDto dto) {
 		Map<String, Object> map = new HashMap<>();
         if (StringUtils.isEmpty(dto.getId())) {
         	map.put("code", 0);
@@ -100,7 +100,7 @@ public class UserController {
         	map.put("code", 200);
         	dto.setId("");
         	PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-    		Page<UserRolePermissionDto> resultList = userService.getUserList(dto);
+    		Page<UserRoleDto> resultList = userService.getUserList(dto);
     		if(resultList != null) {
     			map.put("code", 200);
     			map.put("resultList", resultList);
@@ -116,10 +116,10 @@ public class UserController {
     }
 	
 	@PostMapping("/getUserList")
-	public Map<String, Object> getUserList(@RequestBody UserRolePermissionDto dto){
+	public Map<String, Object> getUserList(@RequestBody UserRoleDto dto){
 		Map<String, Object> map = new HashMap<>();
 		PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-		Page<UserRolePermissionDto> resultList = userService.getUserList(dto);
+		Page<UserRoleDto> resultList = userService.getUserList(dto);
 		if(resultList != null) {
 			map.put("code", 200);
 			map.put("resultList", resultList);

@@ -35,6 +35,7 @@
         select * from inventory_info ii
         left join production_info pi on ii.production_id = pi.id
         where 1=1 and ii.enable_delete = '1'
+            <if test="id !=null and id != ''">and ii.id=#{id}</if>
 			<if test="arrivalBatch !=null and arrivalBatch != ''">and ii.arrival_batch like concat ('%',#{arrivalBatch},'%')</if>
 			<if test="per !=null and per != ''">and ii.per=#{per}</if>
 			<if test="suite !=null and suite!= ''">and ii.suite=#{suite}</if>

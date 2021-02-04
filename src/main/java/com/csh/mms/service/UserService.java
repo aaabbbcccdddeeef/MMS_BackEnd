@@ -1,18 +1,18 @@
 package com.csh.mms.service;
 
 import com.csh.mms.domain.SysUser;
-import com.csh.mms.dto.UserRolePermissionDto;
+import com.csh.mms.dto.UserRoleDto;
 import com.github.pagehelper.Page;
 
 public interface UserService {
 	
-	SysUser getUserByAccount(String account);
+//	SysUser getUserByAccount(String account);
 	
-	void insertUser (UserRolePermissionDto dto);
+	void insertUser (UserRoleDto dto);
 
-	void updateUser (UserRolePermissionDto dto);
+	void updateUser (UserRoleDto dto);
 	
 	void deleteUser (String id);
 
-	Page<UserRolePermissionDto> getUserList(UserRolePermissionDto dto);
+	Page<UserRoleDto> getUserList(UserRoleDto dto);
 }

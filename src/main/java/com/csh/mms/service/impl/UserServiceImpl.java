@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.csh.mms.dao.UserDao;
 import com.csh.mms.domain.SysUser;
-import com.csh.mms.dto.UserRolePermissionDto;
+import com.csh.mms.dto.UserRoleDto;
 import com.csh.mms.service.UserService;
 import com.github.pagehelper.Page;
 /**
@@ -23,23 +23,22 @@ public class UserServiceImpl implements UserService{
 	private UserDao userDao;
 	
 	@Override
-	public void insertUser(UserRolePermissionDto dto) {
+	public void insertUser(UserRoleDto dto) {
 		userDao.insertUser(dto);
 	}
 
 	@Override
-	public void updateUser(UserRolePermissionDto dto) {
+	public void updateUser(UserRoleDto dto) {
 		userDao.updateUser(dto);
 	}
 
-	@Override
-	public SysUser getUserByAccount(String account) {
-		SysUser user = userDao.getUserByAccount(account);
-		return user;
-	}
+	/*
+	 * @Override public SysUser getUserByAccount(String account) { SysUser user =
+	 * userDao.getUserByAccount(account); return user; }
+	 */
 
 	@Override
-	public Page<UserRolePermissionDto> getUserList(UserRolePermissionDto dto) {
+	public Page<UserRoleDto> getUserList(UserRoleDto dto) {
 		return userDao.getUserList(dto);
 	}
 

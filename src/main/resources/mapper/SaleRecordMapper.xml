@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.csh.mms.dao.SaleRecordDao">
-    <!-- 根据id查询销售记录详情-->
-    <select id="getSaleRecord" resultType="com.csh.mms.domain.SaleRecord" parameterType="java.lang.String" >
-        select * from sale_record pi where pi.id = #{id}
-	</select>
-	
 	<!-- 新增销售记录 -->
 	<insert id="insertSaleRecord" parameterType="java.lang.String" useGeneratedKeys="true" keyProperty="id">
 		insert into sale_record
 			(id, production_id, order_id, amount, price, total, fault_type, fault_description, creator, create_time,
-				  modifier, update_time, remark)
+				  modifier, update_time, enable_delete, remark)
 			values (#{id}, #{productionId}, #{orderId}, #{amount}, #{price}, #{total}, #{faultType},
-				 #{faultDescription}, #{creator}, #{createTime}, #{modifier}, #{update_time}, #{remark})
+				 #{faultDescription}, #{creator}, #{createTime}, #{modifier}, #{update_time}, #{enableDelete}, #{remark})
 	</insert>
 	<!-- 修改销售记录 -->
 	<update id="updateSaleRecord"  parameterType="java.lang.String" >
