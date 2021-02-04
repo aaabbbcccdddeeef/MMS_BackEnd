@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.csh.mms.dto.RoleDto;
-import com.csh.mms.dto.UserRolePermissionDto;
+import com.csh.mms.dto.UserRoleDto;
 import com.csh.mms.service.RoleService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;

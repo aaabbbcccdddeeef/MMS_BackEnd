@@ -10,7 +10,8 @@ package com.csh.mms.dto;
  */
 public class PermissionDto {
 	private String id;
-	private String permissonName;
+	private String roleId;
+	private String permissionName;
 	private String remark;
 	private int pageNum = 1;
 	private int pageSize = 10;
@@ -19,12 +20,6 @@ public class PermissionDto {
 	}
 	public void setId(String id) {
 		this.id = id;
-	}
-	public String getPermissonName() {
-		return permissonName;
-	}
-	public void setPermissonName(String permissonName) {
-		this.permissonName = permissonName;
 	}
 	public String getRemark() {
 		return remark;
@@ -43,6 +38,18 @@ public class PermissionDto {
 	}
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
+	}
+	public String getPermissionName() {
+		return permissionName;
+	}
+	public void setPermissionName(String permissionName) {
+		this.permissionName = permissionName;
+	}
+	public String getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
 	}
 	
 }

@@ -1,18 +1,15 @@
 package com.csh.mms.service;
 
-import com.csh.mms.domain.SaleRecord;
 import com.csh.mms.dto.SaleInventoryProdDto;
 import com.github.pagehelper.Page;
 
 public interface SaleService {
 
-	SaleRecord getSaleRecord(String id);
+	void insertSaleRecord(SaleInventoryProdDto dto);
 
-	SaleRecord insertSaleRecord(SaleRecord saleRecord);
+	void updateSaleRecord(SaleInventoryProdDto dto);
 
-	SaleRecord updateSaleRecord(SaleRecord saleRecord);
-
-	SaleRecord deleteSaleRecord(String id);
+	void deleteSaleRecord(SaleInventoryProdDto dto);
 
 	Page<SaleInventoryProdDto> getSaleList(SaleInventoryProdDto dto);
 

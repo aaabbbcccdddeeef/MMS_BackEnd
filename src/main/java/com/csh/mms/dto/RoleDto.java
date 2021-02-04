@@ -1,6 +1,7 @@
 package com.csh.mms.dto;
 
 import java.sql.Timestamp;
+import java.util.Set;
 
 /**
  * 
@@ -13,6 +14,7 @@ import java.sql.Timestamp;
 public class RoleDto {
 	
 	private String id;
+	private String roleId;
 	private String userId;
 	private String roleName;
 	private String roleCode;
@@ -27,6 +29,7 @@ public class RoleDto {
 	private String remark;
 	private int pageNum = 1;
 	private int pageSize = 10;
+	private Set<PermissionDto> permissions;
 	public String getId() {
 		return id;
 	}
@@ -116,6 +119,18 @@ public class RoleDto {
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+	public String getRoleId() {
+		return roleId;
+	}
+	public void setRoleId(String roleId) {
+		this.roleId = roleId;
+	}
+	public Set<PermissionDto> getPermissions() {
+		return permissions;
+	}
+	public void setPermissions(Set<PermissionDto> permissions) {
+		this.permissions = permissions;
 	}
 	
 }

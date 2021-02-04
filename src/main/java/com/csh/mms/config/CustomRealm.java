@@ -14,6 +14,9 @@ import org.springframework.util.StringUtils;
 import com.csh.mms.domain.SysPermission;
 import com.csh.mms.domain.SysRole;
 import com.csh.mms.domain.SysUser;
+import com.csh.mms.dto.PermissionDto;
+import com.csh.mms.dto.RoleDto;
+import com.csh.mms.dto.UserRoleDto;
 import com.csh.mms.service.LoginService;
 
 /**
@@ -40,14 +43,15 @@ public class CustomRealm extends AuthorizingRealm {
         //获取登录用户名
         String account = (String) principalCollection.getPrimaryPrincipal();
         //查询用户名称
-        SysUser user = loginService.getUserByAccount(account);
+//        SysUser user = loginService.getUserByAccount(account);
+        UserRoleDto user = loginService.getUserByAccount(account);
         //添加角色和权限
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        for (SysRole role : user.getRoles()) {
+        for (RoleDto role : user.getRoles()) {
             //添加角色
             simpleAuthorizationInfo.addRole(role.getRoleName());
             //添加权限
-            for (SysPermission permission : role.getPermission()) {
+            for (PermissionDto permission : role.getPermissions()) {
                 simpleAuthorizationInfo.addStringPermission(permission.getPermissionName());
             }
         }
@@ -67,7 +71,8 @@ public class CustomRealm extends AuthorizingRealm {
         }
         //获取用户信息
         String account = authenticationToken.getPrincipal().toString();
-        SysUser user = loginService.getUserByAccount(account);
+//        SysUser user = loginService.getUserByAccount(account);
+        UserRoleDto user = loginService.getUserByAccount(account);
         if (user == null) {
             //这里返回后会报出对应异常
             return null;

@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.csh.mms.domain.SysUser;
-import com.csh.mms.dto.UserRolePermissionDto;
+import com.csh.mms.dto.UserRoleDto;
 import com.github.pagehelper.Page;
 /**
  * 
@@ -17,14 +17,16 @@ import com.github.pagehelper.Page;
 @Mapper
 public interface UserDao {
 
-	void insertUser(UserRolePermissionDto dto);
+	void insertUser(UserRoleDto dto);
 
-	void updateUser(UserRolePermissionDto dto);
+	void updateUser(UserRoleDto dto);
 
 	void deleteUser(@Param("id") String id);
 
-	SysUser getUserByAccount(@Param(value = "account") String account);
+//	SysUser getUserByAccount(@Param(value = "account") String account);
 
-	Page<UserRolePermissionDto> getUserList(UserRolePermissionDto dto);
+	UserRoleDto getUserDtoByAccount(@Param(value = "account") String account);
+	
+	Page<UserRoleDto> getUserList(UserRoleDto dto);
 
 }

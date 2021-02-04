@@ -2,20 +2,17 @@ package com.csh.mms.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.csh.mms.domain.SaleRecord;
 import com.csh.mms.dto.SaleInventoryProdDto;
 import com.github.pagehelper.Page;
 
 @Mapper
 public interface SaleRecordDao {
 	
-    SaleRecord getSaleRecord(String id);
+    void insertSaleRecord(SaleInventoryProdDto dto);
     
-    SaleRecord insertSaleRecord(SaleRecord saleRecord);
-    
-	SaleRecord updateSaleRecord(SaleRecord saleRecord);
+	void updateSaleRecord(SaleInventoryProdDto dto);
 	
-	SaleRecord deleteSaleRecord(String id);
+	void deleteSaleRecord(SaleInventoryProdDto dto);
 
 	Page<SaleInventoryProdDto> getSaleList(SaleInventoryProdDto dto);
 	 
