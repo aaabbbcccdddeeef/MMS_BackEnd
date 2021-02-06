@@ -28,7 +28,7 @@
 	</update>
 	<!-- 删除库存信息（逻辑删除，改变库存有效状态） -->
 	<delete id="deleteInventory"  parameterType="java.lang.String" >
-		update inventory_info ii set ii.enable_delete = '2'
+		update inventory_info ii set ii.enable_delete = '2' where ii.id=#{id}
 	</delete>
 	
 	<select id="getInventoryList" resultType="com.csh.mms.dto.InventoryProdDto" parameterType="java.lang.String" >
