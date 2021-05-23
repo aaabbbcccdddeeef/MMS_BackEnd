@@ -11,6 +11,6 @@ public interface RoleService {
 
 	void updateRole(RoleDto dto);
 
-	void deleteRole(String id);
+	void deleteRole(RoleDto dto);
 
 }

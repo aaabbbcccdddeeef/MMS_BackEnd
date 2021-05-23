@@ -31,7 +31,7 @@
 	</update>
 	<!-- 删除销售记录（逻辑删除，改变产品有效状态） -->
 	<delete id="deleteSaleRecord"  parameterType="java.lang.String" >
-		update sale_record pi set pi.enable_delete = '2'
+		update sale_record set enable_delete = '2' where id= #{id}
 	</delete>
 	
 	<select id="getSaleList" resultType="com.csh.mms.dto.SaleInventoryProdDto" parameterType="java.lang.String" >

@@ -14,6 +14,6 @@ public interface RoleDao {
 
 	void updateRole(RoleDto dto);
 
-	void deleteRole(String id);
+	void deleteRole(RoleDto dto);
 
 }

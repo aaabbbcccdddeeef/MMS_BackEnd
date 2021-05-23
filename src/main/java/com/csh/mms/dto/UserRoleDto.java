@@ -18,7 +18,7 @@ public class UserRoleDto {
 	private String account;
 	private String password;
 	private String name;
-	private String sex;
+	private String dictName;
 	private Blob icon;
 	private String mobilePhone;
 	private String alias;
@@ -71,12 +71,6 @@ public class UserRoleDto {
 	}
 	private int pageNum = 1;
 	private int pageSize = 10;
-	public String getSex() {
-		return sex;
-	}
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
 	public Blob getIcon() {
 		return icon;
 	}
@@ -163,5 +157,11 @@ public class UserRoleDto {
 	}
 	public void setRoles(Set<RoleDto> roles) {
 		this.roles = roles;
+	}
+	public String getDictName() {
+		return dictName;
+	}
+	public void setDictName(String dictName) {
+		this.dictName = dictName;
 	}
 }

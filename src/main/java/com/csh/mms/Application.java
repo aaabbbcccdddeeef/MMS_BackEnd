@@ -36,8 +36,10 @@ public class Application {
 	    private CorsConfiguration buildConfig() {  
 	        CorsConfiguration corsConfiguration = new CorsConfiguration();  
 	        corsConfiguration.addAllowedOrigin("*"); // 1允许任何域名使用
+	        //corsConfiguration.addAllowedOrigin("http://192.168.10.107:8080"); //允许跨越发送cookie  
 	        corsConfiguration.addAllowedHeader("*"); // 2允许任何头
 	        corsConfiguration.addAllowedMethod("*"); // 3允许任何方法（post、get等） 
+	        corsConfiguration.setAllowCredentials(true); //放行全部原始头信息
 	        return corsConfiguration;  
 	    }  
 	  

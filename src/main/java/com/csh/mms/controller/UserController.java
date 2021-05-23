@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.csh.mms.dto.DictionaryDto;
 import com.csh.mms.dto.UserRoleDto;
+import com.csh.mms.service.DictionaryService;
 import com.csh.mms.service.UserService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -31,13 +33,37 @@ import com.github.pagehelper.PageHelper;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private DictionaryService dicService;
+	
+	@PostMapping("/getUserList")
+	public Map<String, Object> getUserList(@RequestBody UserRoleDto dto){
+		Map<String, Object> map = new HashMap<>();
+		PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
+		Page<UserRoleDto> resultList = userService.getUserList(dto);
+		DictionaryDto dictDto = new DictionaryDto();
+		dictDto.setName("仓属");
+		dictDto.setType("2");
+		Page<DictionaryDto> resultDictList = dicService.getDictList(dictDto);
+		if(resultList != null) {
+			map.put("code", 200);
+			map.put("resultList", resultList);
+			map.put("resultDicList", resultDictList);
+			map.put("totalpage", resultList.getPages());
+			map.put("totalCount", resultList.getTotal());
+			return map;
+		}else {
+			map.put("code", 0);
+			map.put("msg", "查询失败！");
+			return map;
+		}
+	}
+	
 
 	@PostMapping("/insertUser")
     public Map<String, Object> inertUser(@RequestBody UserRoleDto dto) {
 		Map<String, Object> map = new HashMap<>();
 		if(dto != null) {
-			dto.setId(UUID.randomUUID().toString());
-			dto.setEnableDelete("1");
 			userService.insertUser(dto);
 			map.put("code", 200);
 			UserRoleDto dto1 = new UserRoleDto();
@@ -114,23 +140,5 @@ public class UserController {
     		}
         }
     }
-	
-	@PostMapping("/getUserList")
-	public Map<String, Object> getUserList(@RequestBody UserRoleDto dto){
-		Map<String, Object> map = new HashMap<>();
-		PageHelper.startPage(dto.getPageNum(), dto.getPageSize());
-		Page<UserRoleDto> resultList = userService.getUserList(dto);
-		if(resultList != null) {
-			map.put("code", 200);
-			map.put("resultList", resultList);
-			map.put("totalpage", resultList.getPages());
-			map.put("totalCount", resultList.getTotal());
-			return map;
-		}else {
-			map.put("code", 0);
-			map.put("msg", "查询失败！");
-			return map;
-		}
-	}
 	
 }

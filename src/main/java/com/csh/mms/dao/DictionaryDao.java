@@ -2,20 +2,28 @@ package com.csh.mms.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.csh.mms.domain.SysDictionary;
+import com.csh.mms.dto.DictionaryDetailDto;
 import com.csh.mms.dto.DictionaryDto;
 import com.github.pagehelper.Page;
 
 @Mapper
 public interface DictionaryDao {
 
-	SysDictionary insertDictionary(SysDictionary sysDictionary);
+	void insertDictionary(DictionaryDto dto);
 
-	SysDictionary updateDictionary(SysDictionary sysDictionary);
+	void updateDictionary(DictionaryDto dto);
 
-	SysDictionary deleteDictionary(String id);
+	void deleteDictionary(DictionaryDto dto);
 
 	Page<DictionaryDto> getDictList(DictionaryDto dto);
+
+	Page<DictionaryDto> getDictDetailList(DictionaryDto dto);
+
+	void insertDictionaryDetail(DictionaryDetailDto dto);
+
+	void updateDictionaryDetail(DictionaryDetailDto dto);
+
+	void deleteDictionary(DictionaryDetailDto dto);
 
 
 }

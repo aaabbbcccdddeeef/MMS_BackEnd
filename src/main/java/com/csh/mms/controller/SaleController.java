@@ -2,7 +2,6 @@ package com.csh.mms.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,8 +42,6 @@ public class SaleController {
 	public Map<String, Object> insertSaleRecord(@RequestBody SaleInventoryProdDto dto) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		if(dto != null) {
-			dto.setId(UUID.randomUUID().toString());
-			dto.setEnableDelete("1");
 			saleService.insertSaleRecord(dto);
 			SaleInventoryProdDto dto1 = new SaleInventoryProdDto();
 			dto1.setPageNum(dto.getPageNum());

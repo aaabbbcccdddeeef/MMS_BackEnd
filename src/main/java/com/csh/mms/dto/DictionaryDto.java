@@ -13,15 +13,18 @@ import java.sql.Timestamp;
 public class DictionaryDto {
 	
 	private String id;
+	private String parentId;
 	private String name;
 	private String code;
 	private String codeName;
-	private String number;
+	private String codeValue;
+	private String sequence;
 	private String enableUse;
 	private String enableDelete;
 	private String creator;
 	private Timestamp createTime;
 	private String modifier;
+	private String type;
 	private Timestamp updateTime;
 	private int pageNum = 1;
 	private int pageSize = 10;
@@ -57,12 +60,6 @@ public class DictionaryDto {
 	}
 	public void setCode(String code) {
 		this.code = code;
-	}
-	public String getNumber() {
-		return number;
-	}
-	public void setNumber(String number) {
-		this.number = number;
 	}
 	public String getEnableUse() {
 		return enableUse;
@@ -111,6 +108,30 @@ public class DictionaryDto {
 	}
 	public void setCodeName(String codeName) {
 		this.codeName = codeName;
+	}
+	public String getSequence() {
+		return sequence;
+	}
+	public void setSequence(String sequence) {
+		this.sequence = sequence;
+	}
+	public String getCodeValue() {
+		return codeValue;
+	}
+	public void setCodeValue(String codeValue) {
+		this.codeValue = codeValue;
+	}
+	public String getParentId() {
+		return parentId;
+	}
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

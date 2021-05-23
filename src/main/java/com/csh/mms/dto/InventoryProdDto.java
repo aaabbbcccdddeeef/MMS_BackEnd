@@ -15,8 +15,10 @@ public class InventoryProdDto {
 	private String id;
 	private String productionId;
 	private String arrivalBatch;
-	private String per;
-	private String suite;
+	private Integer per;
+	private Integer suite;
+	private String totalNumber;
+	private String totalSets;
 	private String productionName;
 	private String productionType;
 	private String productionTypeId;
@@ -55,16 +57,16 @@ public class InventoryProdDto {
 	public void setArrivalBatch(String arrivalBatch) {
 		this.arrivalBatch = arrivalBatch;
 	}
-	public String getPer() {
+	public Integer getPer() {
 		return per;
 	}
-	public void setPer(String per) {
+	public void setPer(Integer per) {
 		this.per = per;
 	}
-	public String getSuite() {
+	public Integer getSuite() {
 		return suite;
 	}
-	public void setSuite(String suite) {
+	public void setSuite(Integer suite) {
 		this.suite = suite;
 	}
 	public String getProductionName() {
@@ -198,6 +200,18 @@ public class InventoryProdDto {
 	}
 	public void setEnableDelete(String enableDelete) {
 		this.enableDelete = enableDelete;
+	}
+	public String getTotalNumber() {
+		return totalNumber;
+	}
+	public void setTotalNumber(String totalNumber) {
+		this.totalNumber = totalNumber;
+	}
+	public String getTotalSets() {
+		return totalSets;
+	}
+	public void setTotalSets(String totalSets) {
+		this.totalSets = totalSets;
 	}
 	
 }
