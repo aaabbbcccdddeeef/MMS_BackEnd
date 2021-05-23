@@ -10,7 +10,7 @@ public interface ProductionInfoService {
 
 	ProductionInfo getProdInfo(@Param("id") String id);
 
-	void deleteProd(@Param("id") String id);
+	void deleteProd(InventoryProdDto dto);
 
 	void updateProd(InventoryProdDto dto);
 

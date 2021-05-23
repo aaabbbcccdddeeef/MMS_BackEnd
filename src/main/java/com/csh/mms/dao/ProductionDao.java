@@ -24,7 +24,7 @@ public interface ProductionDao {
 
 	Page<InventoryProdDto> getProdList(InventoryProdDto prod);
 
-	void deleteProd(String id);
+	void deleteProd(InventoryProdDto dto);
 
 
 }

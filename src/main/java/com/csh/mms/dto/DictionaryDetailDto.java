@@ -10,21 +10,19 @@ import java.sql.Timestamp;
  * @date  2020年10月31日 下午10:16:41 
  *
  */
-public class DictionaryDto {
+public class DictionaryDetailDto {
 	
 	private String id;
-	private String parentId;
+	private String sysDictionaryId;
 	private String name;
-	private String code;
+	private String dictionartyDetailCode;
 	private String codeName;
-	private String codeValue;
 	private String sequence;
 	private String enableUse;
 	private String enableDelete;
 	private String creator;
 	private Timestamp createTime;
 	private String modifier;
-	private String type;
 	private Timestamp updateTime;
 	private int pageNum = 1;
 	private int pageSize = 10;
@@ -54,12 +52,6 @@ public class DictionaryDto {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getCode() {
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
 	}
 	public String getEnableUse() {
 		return enableUse;
@@ -115,23 +107,17 @@ public class DictionaryDto {
 	public void setSequence(String sequence) {
 		this.sequence = sequence;
 	}
-	public String getCodeValue() {
-		return codeValue;
+	public String getSysDictionaryId() {
+		return sysDictionaryId;
 	}
-	public void setCodeValue(String codeValue) {
-		this.codeValue = codeValue;
+	public void setSysDictionaryId(String sysDictionaryId) {
+		this.sysDictionaryId = sysDictionaryId;
 	}
-	public String getParentId() {
-		return parentId;
+	public String getDictionartyDetailCode() {
+		return dictionartyDetailCode;
 	}
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
+	public void setDictionartyDetailCode(String dictionartyDetailCode) {
+		this.dictionartyDetailCode = dictionartyDetailCode;
 	}
 
 }

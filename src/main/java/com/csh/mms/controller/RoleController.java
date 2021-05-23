@@ -2,18 +2,15 @@ package com.csh.mms.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.csh.mms.dto.RoleDto;
-import com.csh.mms.dto.UserRoleDto;
 import com.csh.mms.service.RoleService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -47,8 +44,6 @@ public class RoleController {
     public Map<String, Object> insertRole(@RequestBody RoleDto dto) {
 		Map<String, Object> map = new HashMap<>();
 		if(dto != null) {
-			dto.setId(UUID.randomUUID().toString());
-			dto.setEnableDelete("1");
 			roleService.insertRole(dto);
 			map.put("code", 200);
 			RoleDto dto1 = new RoleDto();
@@ -99,7 +94,7 @@ public class RoleController {
 		}
     }
 	
-	@RequestMapping(value = "/deleteRole", method = RequestMethod.POST)
+	@PostMapping("/deleteRole")
     public Map<String, Object> deleteRole(@RequestBody RoleDto dto) {
 		Map<String, Object> map = new HashMap<>();
         if (StringUtils.isEmpty(dto.getId())) {
@@ -107,7 +102,7 @@ public class RoleController {
         	map.put("msgcode", "删除数据id是空，删除失败！");
         	return map;
         }else {
-        	roleService.deleteRole(dto.getId());
+        	roleService.deleteRole(dto);
         	map.put("code", 200);
         	dto.setId("");
         	PageHelper.startPage(dto.getPageNum(), dto.getPageSize());

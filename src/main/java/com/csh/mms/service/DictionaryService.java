@@ -1,17 +1,25 @@
 package com.csh.mms.service;
 
-import com.csh.mms.domain.SysDictionary;
+import com.csh.mms.dto.DictionaryDetailDto;
 import com.csh.mms.dto.DictionaryDto;
 import com.github.pagehelper.Page;
 
 public interface DictionaryService {
 
-	SysDictionary insertDictionary(SysDictionary sysDictionary);
+	void insertDictionary(DictionaryDto dto);
 
-	SysDictionary updateDictionary(SysDictionary sysDictionary);
+	void updateDictionary(DictionaryDto dto);
 
-	SysDictionary deleteDictionary(String id);
+	void deleteDictionary(DictionaryDto dto);
 
 	Page<DictionaryDto> getDictList(DictionaryDto dto);
+
+	Page<DictionaryDto> getDictDetailList(DictionaryDto dto);
+
+	void insertDictionaryDetail(DictionaryDetailDto dto);
+
+	void updateDictionaryDetail(DictionaryDetailDto dto);
+
+	void deleteDictionaryDetail(DictionaryDetailDto dto);
 
 }

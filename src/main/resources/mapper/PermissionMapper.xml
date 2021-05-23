@@ -4,22 +4,22 @@
     <select id="getPermissionList" resultType="com.csh.mms.dto.PermissionDto" parameterType="java.lang.String" >
         select * from sys_permission sp where 1=1
         <if test="id != null and id != ''">and sp.id=#{id}</if>
-        <if test="permissonName != null and permissonName != ''">and sp.permisson_name like concat('%',#{permName},'%')}</if>
+        <if test="permissionName != null and permissionName != ''">and sp.permission_name like concat('%',#{permissionName},'%')}</if>
         <if test="remark != null and remark != ''">and sp.remark like concat('%',#{remark},'%')}</if>
 	</select>
 	<insert id="insertPermission" parameterType="java.util.HashMap" useGeneratedKeys="true" keyProperty="id">
 		insert into sys_permission
-			(id, permisson_name, remark) values (#{id}, #{permissonName}, #{remark})
+			(id, permission_name, remark) values (#{id}, #{permissionName}, #{remark})
 	</insert>
 	<update id="updatePermission"  parameterType="java.lang.String" >
 		update sys_permission
 			<trim prefix="set" suffixOverrides=",">
-				<if test="permissonName !=null">permisson_name=#{permissonName},</if>
+				<if test="permissionName !=null">permission_name=#{permissionName},</if>
 				<if test="remark !=null">remark=#{remark},</if>
 			</trim>
 		where id =#{id}
 	</update>
 	<delete id="deletePermission"  parameterType="map" >
-		delete from sys_permission where id=#{id}
+		delete from sys_permission where id = #{id}
 	</delete>
 </mapper>

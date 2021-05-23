@@ -1,5 +1,6 @@
 package com.csh.mms.config;
 
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -7,13 +8,11 @@ import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
+import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
-import com.csh.mms.domain.SysPermission;
-import com.csh.mms.domain.SysRole;
-import com.csh.mms.domain.SysUser;
 import com.csh.mms.dto.PermissionDto;
 import com.csh.mms.dto.RoleDto;
 import com.csh.mms.dto.UserRoleDto;
@@ -32,6 +31,7 @@ public class CustomRealm extends AuthorizingRealm {
 	@Autowired
     private LoginService loginService;
 
+	
     /**
      * @MethodName doGetAuthorizationInfo
      * @Description 权限配置类
@@ -55,6 +55,11 @@ public class CustomRealm extends AuthorizingRealm {
                 simpleAuthorizationInfo.addStringPermission(permission.getPermissionName());
             }
         }
+//        Session session = SecurityUtils.getSubject().getSession();
+//        session.setAttribute("user", user);
+//        session.setAttribute("userInfo", simpleAuthorizationInfo);
+//        SimpleAuthorizationInfo userInfo = (SimpleAuthorizationInfo) SecurityUtils.getSubject().getSession().getAttribute("userInfo");
+//        System.out.println("123:"+userInfo);
         return simpleAuthorizationInfo;
     }
 
@@ -79,6 +84,12 @@ public class CustomRealm extends AuthorizingRealm {
         } else {
             //这里验证authenticationToken和simpleAuthenticationInfo的信息
             SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(account, user.getPassword().toString(), getName());
+            Session session = SecurityUtils.getSubject().getSession();
+//            session.setAttribute("userInfo", simpleAuthorizationInfo);
+//            customRealm.getAuthorizationCache().get(SecurityUtils.getSubject().getPrincipals());
+//            SimpleAuthorizationInfo userInfo = (SimpleAuthorizationInfo) SecurityUtils.getSubject().getSession().getAttribute("userInfo");
+            session.setAttribute("user", user);
+//            session.setAttribute("userInfo", simpleAuthenticationInfo);
             return simpleAuthenticationInfo;
         }
     }

@@ -2,7 +2,6 @@ package com.csh.mms.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -42,8 +41,6 @@ public class InventoryInfoController {
 	public Map<String, Object> insertInventory(@RequestBody InventoryProdDto dto) {
 		Map<String, Object> map = new HashMap<>();
 		if(dto != null) {
-			dto.setId(UUID.randomUUID().toString());
-			dto.setEnableDelete("1");
 			inventoryService.insertInventory(dto);
 			map.put("code", 200);
 			InventoryProdDto dto1 = new InventoryProdDto();

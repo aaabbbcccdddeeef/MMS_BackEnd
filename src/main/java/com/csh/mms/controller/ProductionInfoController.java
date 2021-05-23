@@ -2,7 +2,6 @@ package com.csh.mms.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.csh.mms.domain.ProductionInfo;
 import com.csh.mms.dto.InventoryProdDto;
-import com.csh.mms.dto.UserRoleDto;
 import com.csh.mms.service.ProductionInfoService;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
@@ -71,8 +69,6 @@ public class ProductionInfoController {
 	public Map<String, Object> insertProd(@RequestBody InventoryProdDto dto) {
 		Map<String, Object> map = new HashMap<>();
 		if(dto != null) {
-			dto.setId(UUID.randomUUID().toString());
-			dto.setEnableDelete("1");
 			prodService.insertProd(dto);
 			map.put("code", 200);
 			InventoryProdDto dto1 = new InventoryProdDto();
@@ -121,7 +117,7 @@ public class ProductionInfoController {
         	map.put("msgcode", "删除数据id是空，删除失败！");
         	return map;
         }else {
-        	prodService.deleteProd(dto.getId());
+        	prodService.deleteProd(dto);
         	map.put("code", 200);
         	dto.setId("");
         	InventoryProdDto dto1 = new InventoryProdDto();

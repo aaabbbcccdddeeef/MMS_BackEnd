@@ -1,12 +1,18 @@
 package com.csh.mms.service.impl;
 
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.UUID;
+
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.csh.mms.dao.UserDao;
-import com.csh.mms.domain.SysUser;
 import com.csh.mms.dto.UserRoleDto;
 import com.csh.mms.service.UserService;
+import com.csh.mms.utils.DateTime;
 import com.github.pagehelper.Page;
 /**
  * 
@@ -24,11 +30,22 @@ public class UserServiceImpl implements UserService{
 	
 	@Override
 	public void insertUser(UserRoleDto dto) {
+		Session session = SecurityUtils.getSubject().getSession();
+		UserRoleDto user = (UserRoleDto) session.getAttribute("user");
+		dto.setId(UUID.randomUUID().toString());
+		dto.setEnableDelete("1");
+		dto.setCreatorId(user.getId());
+		dto.setCreator(user.getName());
+		dto.setCreateTime(new DateTime().toTimeStamp(new Date()));
 		userDao.insertUser(dto);
 	}
 
 	@Override
 	public void updateUser(UserRoleDto dto) {
+		Session session = SecurityUtils.getSubject().getSession();
+		UserRoleDto user = (UserRoleDto) session.getAttribute("user");
+		dto.setModifier(user.getName());
+		dto.setUpdateTime(new DateTime().toTimeStamp(new Date()));
 		userDao.updateUser(dto);
 	}
 
